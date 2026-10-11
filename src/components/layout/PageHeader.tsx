@@ -16,6 +16,7 @@ interface PageHeaderProps {
   onOpenAddExpense: () => void
   onOpenImpulseBuster?: () => void
   onOpenVibeCard?: () => void
+  onOpenBrokeMode?: () => void
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -24,8 +25,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   onOpenAddExpense,
   onOpenImpulseBuster,
   onOpenVibeCard,
+  onOpenBrokeMode,
 }) => {
-  const { state, insights, setCurrentDay } = useFinance()
+  const { state, metrics, insights, setCurrentDay } = useFinance()
 
   const handlePrevDay = () => {
     if (state.currentDay > 1) {
@@ -120,6 +122,23 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             >
               <span className="text-xs">⚡</span>
               <span className="hidden xl:inline">Impulse Buster</span>
+            </button>
+          )}
+
+          {/* Broke Mode Emergency Trigger */}
+          {onOpenBrokeMode && (
+            <button
+              onClick={onOpenBrokeMode}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-[#FF5C5C] shrink-0 ${
+                metrics.availableDiscretionaryFunds < 1000
+                  ? 'bg-[#FF5C5C]/20 border-[#FF5C5C] text-[#FF5C5C] animate-pulse'
+                  : 'bg-[#141822] border-[#263045] text-[#A5ADBE] hover:text-[#FF5C5C] hover:border-[#FF5C5C]/40'
+              }`}
+              title="Broke Mode: Algorithmic emergency bailout"
+              aria-label="Broke Mode Emergency Bailout"
+            >
+              <span className="text-xs">🚨</span>
+              <span className="hidden xl:inline">Broke Mode</span>
             </button>
           )}
 

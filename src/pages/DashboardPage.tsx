@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { FinancialMetricsGrid } from '../components/dashboard/FinancialMetric'
 import { SurvivalStreakBadge } from '../components/innovation/SurvivalStreakBadge'
+import { TimeTravelScrubber } from '../components/innovation/TimeTravelScrubber'
 import { CommitmentsPreview } from '../components/dashboard/CommitmentsPreview'
 import { InsightsPreview } from '../components/dashboard/InsightsPreview'
 import { useFinance } from '../state/useFinance'
@@ -27,7 +28,10 @@ export const DashboardPage: React.FC = () => {
       {/* 2. Gen Z "Survive the Month" Streak & Vibe Badges */}
       <SurvivalStreakBadge />
 
-      {/* 3. Responsive Key Financial Metrics Grid */}
+      {/* 3. Interactive 30-Day Time-Travel Engine & Fast-Forward Scrubber */}
+      <TimeTravelScrubber />
+
+      {/* 4. Responsive Key Financial Metrics Grid */}
       <FinancialMetricsGrid />
 
       {/* 3. Spending Trajectory Chart (Asynchronously loaded to keep initial bundle ultra-light) */}

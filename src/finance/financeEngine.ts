@@ -185,8 +185,14 @@ export function calculateFinancialMetrics(state: RupeeFlowState): FinancialMetri
   })
 
   // Spending Pace Analysis
-  // Target daily budget = (opening budget - planned commitments - planned savings) / 30
-  const baselineTargetBudget = Math.max(100, (openingBudget - 2500 - totalPlannedCycleSavings) / 30)
+  // Target daily budget derived dynamically from actual commitments and planned savings
+  const totalCycleCommitments =
+    state.commitments.reduce((sum, c) => sum + c.amount, 0) +
+    state.subscriptions.filter((s) => s.active).reduce((sum, s) => sum + s.price, 0)
+  const baselineTargetBudget = Math.max(
+    50,
+    (openingBudget - totalCycleCommitments - totalPlannedCycleSavings) / 30
+  )
   const paceRatio = baselineTargetBudget > 0 ? variableSpendPerElapsedDay / baselineTargetBudget : 1
   let paceStatus: 'under_budget' | 'on_track' | 'over_budget' = 'on_track'
   if (paceRatio < 0.85) paceStatus = 'under_budget'

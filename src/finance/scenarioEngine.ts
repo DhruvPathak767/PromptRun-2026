@@ -84,7 +84,7 @@ export function simulateScenario(
     case 'unexpected_expense': {
       if (scenario.amount > 0) {
         const hypotheticalTx: Transaction = {
-          id: `hypothetical-tx-${Date.now()}`,
+          id: `sim-tx-${scenario.id || 'expense'}`,
           cycleDay: currentDay,
           date: `Day ${currentDay} • Simulated`,
           amount: scenario.amount,
@@ -102,7 +102,7 @@ export function simulateScenario(
     case 'add_income': {
       if (scenario.amount > 0) {
         const hypotheticalIncome: Transaction = {
-          id: `hypothetical-income-${Date.now()}`,
+          id: `sim-income-${scenario.id || 'income'}`,
           cycleDay: currentDay,
           date: `Day ${currentDay} • Simulated`,
           amount: scenario.amount,
@@ -124,7 +124,7 @@ export function simulateScenario(
         if (targetGoal) {
           targetGoal.currentAmount += scenario.amount
           const hypotheticalSavingsTx: Transaction = {
-            id: `hypothetical-savings-${Date.now()}`,
+            id: `sim-savings-${scenario.id || 'savings'}`,
             cycleDay: currentDay,
             date: `Day ${currentDay} • Simulated`,
             amount: scenario.amount,
@@ -144,7 +144,7 @@ export function simulateScenario(
       if (scenario.amount > 0) {
         const billingDay = scenario.dueDay || Math.min(28, currentDay + 5)
         const hypotheticalSub: Subscription = {
-          id: `hypothetical-sub-${Date.now()}`,
+          id: `sim-sub-${scenario.id || 'sub'}`,
           name: scenario.title || 'New Subscription',
           price: scenario.amount,
           billingDay,
@@ -176,7 +176,7 @@ export function simulateScenario(
       if (scenario.amount > 0) {
         const dueDay = scenario.dueDay || Math.min(30, currentDay + 3)
         const hypotheticalCommitment: Commitment = {
-          id: `hypothetical-commit-${Date.now()}`,
+          id: `sim-commit-${scenario.id || 'commit'}`,
           name: scenario.title || 'Planned Bill',
           amount: scenario.amount,
           dueDay,

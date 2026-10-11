@@ -1,7 +1,26 @@
 {
   "name": "rupeeflow",
-  "private": true,
-  "version": "1.0.0",
+  "version": "2.1.0",
+  "description": "Broke But Functional — Survive the Month: Interactive 30-day Gen Z personal finance experience with non-destructive What-If simulations, behavioral economics, and WCAG 2.2 AA accessibility.",
+  "license": "MIT",
+  "author": "FrontendSmashers <dhruvapathak767@gmail.com>",
+  "homepage": "https://rupee-flow-124.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhruvpathak767/promptrun-2026.git"
+  },
+  "keywords": [
+    "personal-finance",
+    "gen-z-finance",
+    "budget-simulator",
+    "survive-the-month",
+    "financial-health",
+    "what-if-scenarios",
+    "accessibility",
+    "web-vitals",
+    "react19",
+    "typescript"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +28,8 @@
     "lint": "eslint . && oxlint",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "test": "vitest run",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ci": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

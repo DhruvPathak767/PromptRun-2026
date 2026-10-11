@@ -14,48 +14,48 @@ const FinanceScene = lazy(() => import('../visualization/FinanceScene'))
 
 export const BalanceHero: React.FC = () => {
   const { state, metrics } = useFinance()
-  const [canRender3D] = useState(() => {
-    if (typeof window === 'undefined') return false
-    const isDesktop = window.innerWidth >= 1024
-    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
-    const hasWebGL = (() => {
-      try {
-        const canvas = document.createElement('canvas')
-        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
-      } catch {
-        return false
-      }
-    })()
-    return isDesktop && !prefersReducedMotion && hasWebGL
-  })
+  const [is3DActive, setIs3DActive] = useState(false)
 
   const isDiscretionaryNegative = metrics.availableDiscretionaryFunds < 0
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-      {/* Left Col: 3D Visualization / Accessible Fallback */}
+      {/* Left Col: 2.5D CSS / Interactive 3D Visualization */}
       <div className="lg:col-span-5 flex flex-col justify-between">
-        {canRender3D ? (
-          <Suspense
-            fallback={
-              <SceneFallback
+        <div className="relative group">
+          {is3DActive ? (
+            <Suspense
+              fallback={
+                <SceneFallback
+                  cashBalance={metrics.cashBalance}
+                  safeDailyAllowance={metrics.safeDailyAllowance}
+                />
+              }
+            >
+              <FinanceScene
                 cashBalance={metrics.cashBalance}
                 safeDailyAllowance={metrics.safeDailyAllowance}
+                currentDay={state.currentDay}
               />
-            }
-          >
-            <FinanceScene
+            </Suspense>
+          ) : (
+            <SceneFallback
               cashBalance={metrics.cashBalance}
               safeDailyAllowance={metrics.safeDailyAllowance}
-              currentDay={state.currentDay}
             />
-          </Suspense>
-        ) : (
-          <SceneFallback
-            cashBalance={metrics.cashBalance}
-            safeDailyAllowance={metrics.safeDailyAllowance}
-          />
-        )}
+          )}
+
+          {/* 3D Orbit Toggle Overlay Button */}
+          <button
+            type="button"
+            onClick={() => setIs3DActive((prev) => !prev)}
+            className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-[#141822]/90 border border-[#263045] text-[#A5ADBE] hover:text-[#C8FF4D] hover:border-[#C8FF4D]/40 backdrop-blur-md shadow-md transition-all flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#C8FF4D]"
+            title={is3DActive ? "Switch to high-efficiency 2D view" : "Launch interactive Three.js 3D orbit"}
+            aria-label={is3DActive ? "Disable 3D Canvas" : "Enable 3D Canvas"}
+          >
+            <span>{is3DActive ? "⚡ High-Efficiency View" : "🌌 Interactive 3D Orbit"}</span>
+          </button>
+        </div>
 
         {/* Quick Health Tag beneath 3D Scene */}
         <div className="mt-3 p-3 rounded-xl bg-[#141822] border border-[#263045] flex items-center justify-between">

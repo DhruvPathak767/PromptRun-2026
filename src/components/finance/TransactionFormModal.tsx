@@ -8,6 +8,7 @@ import {
 import { useFinance } from '../../state/useFinance'
 
 import { sanitizeText, sanitizeAmount, sanitizeCycleDay } from '../../lib/sanitize'
+import { playChimeSound } from '../../lib/soundEffects'
 
 interface TransactionFormModalProps {
   isOpen: boolean
@@ -58,6 +59,8 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
       date: `Day ${cleanDay} • Added`,
       note: cleanNote,
     })
+
+    playChimeSound()
 
     // Reset and close
     setDescription('')
