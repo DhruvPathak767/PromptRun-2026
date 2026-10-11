@@ -41,11 +41,11 @@ export const SpendingChart: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#263045]/60">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               30-Day Spending Trajectory
-            </h3>
+            </h2>
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+              className={`text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
                 paceStatus === 'under_budget'
                   ? 'bg-[#C8FF4D]/15 text-[#C8FF4D]'
                   : paceStatus === 'on_track'
@@ -127,7 +127,7 @@ export const SpendingChart: React.FC = () => {
             <caption className="sr-only">
               30-Day Spending Trajectory Ledger and Forecast Table
             </caption>
-            <thead className="bg-[#141822] text-[11px] uppercase font-bold text-[#F5F7FA] sticky top-0 border-b border-[#263045]">
+            <thead className="bg-[#141822] text-xs uppercase font-bold text-[#F5F7FA] sticky top-0 border-b border-[#263045]">
               <tr>
                 <th scope="col" className="px-4 py-2.5">Cycle Day</th>
                 <th scope="col" className="px-4 py-2.5">Actual Spend</th>
@@ -156,7 +156,7 @@ export const SpendingChart: React.FC = () => {
                   <td className="px-4 py-2 text-[#C8FF4D]">
                     {formatRupees(item.cumulativeSpend)}
                   </td>
-                  <td className="px-4 py-2 font-sans text-[11px]">
+                  <td className="px-4 py-2 font-sans text-xs">
                     {item.isToday ? 'Active Day' : item.isPast ? 'Elapsed' : 'Forecast'}
                   </td>
                 </tr>
@@ -186,14 +186,14 @@ export const SpendingChart: React.FC = () => {
 
               <XAxis
                 dataKey="day"
-                stroke="#6B778C"
-                fontSize={11}
+                stroke="#A5ADBE"
+                fontSize={12}
                 tickLine={false}
                 interval={2}
               />
               <YAxis
-                stroke="#6B778C"
-                fontSize={11}
+                stroke="#A5ADBE"
+                fontSize={12}
                 tickLine={false}
                 tickFormatter={(val) => `₹${val}`}
               />
@@ -214,7 +214,7 @@ export const SpendingChart: React.FC = () => {
                                 {formatRupees(data.cumulativeSpend)}
                               </span>
                             </div>
-                            <div className="text-[11px] text-[#6B778C]">
+                            <div className="text-xs text-[#A5ADBE]">
                               Budget Limit: {formatRupees(metrics.openingBudget)}
                             </div>
                           </div>
@@ -292,25 +292,25 @@ export const SpendingChart: React.FC = () => {
       {/* Chart Footer Highlights */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 mt-2 border-t border-[#263045]/60 text-xs">
         <div>
-          <span className="text-[#A5ADBE] text-[11px] block">Current Spend (Actual)</span>
+          <span className="text-[#A5ADBE] text-xs block">Current Spend (Actual)</span>
           <span className="font-bold font-mono text-[#F5F7FA]">
             {formatRupees(metrics.totalExpenses)}
           </span>
         </div>
         <div>
-          <span className="text-[#A5ADBE] text-[11px] block">Burn Pace / Elapsed Day</span>
+          <span className="text-[#A5ADBE] text-xs block">Burn Pace / Elapsed Day</span>
           <span className="font-bold font-mono text-[#F5F7FA]">
             {formatRupees(metrics.spendingPace.actualDailyAverage)}/d
           </span>
         </div>
         <div>
-          <span className="text-[#A5ADBE] text-[11px] block">Target Max Pace</span>
+          <span className="text-[#A5ADBE] text-xs block">Target Max Pace</span>
           <span className="font-bold font-mono text-[#C8FF4D]">
             {formatRupees(metrics.spendingPace.targetDailyPace)}/d
           </span>
         </div>
         <div>
-          <span className="text-[#A5ADBE] text-[11px] block">Day 30 Estimated Cash</span>
+          <span className="text-[#A5ADBE] text-xs block">Day 30 Estimated Cash</span>
           <span
             className={`font-bold font-mono ${
               metrics.projectedMonthEndCash >= 0 ? 'text-[#34D399]' : 'text-[#FF5C5C]'

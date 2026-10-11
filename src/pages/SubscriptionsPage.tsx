@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { Repeat, Lock, Plus } from 'lucide-react'
 import { useFinance } from '../state/useFinance'
 import { formatRupees } from '../finance/financeEngine'
+import {
+  selectActiveSubscriptions,
+  selectTotalMonthlySubCost,
+  selectDailySubCost,
+} from '../finance/selectors'
 import { ConfirmDialog } from '../components/common/ConfirmDialog'
 import { SubscriptionCardsList } from '../components/finance/SubscriptionCardsList'
 import { CommitmentTable } from '../components/finance/CommitmentTable'
@@ -29,20 +34,24 @@ export const SubscriptionsPage: React.FC = () => {
   const [deleteSubId, setDeleteSubId] = useState<string | null>(null)
   const [deleteCommitId, setDeleteCommitId] = useState<string | null>(null)
 
-  // Active subscriptions total cost
-  const activeSubs = state.subscriptions.filter((s) => s.active)
-  const totalMonthlySubCost = activeSubs.reduce((sum, s) => sum + s.price, 0)
+  // Domain selectors (zero math in UI)
+  const activeSubs = selectActiveSubscriptions(state.subscriptions)
+  const totalMonthlySubCost = selectTotalMonthlySubCost(state.subscriptions)
+  const dailySubImpact = selectDailySubCost(state.subscriptions, metrics.inclusiveDaysRemaining)
 
   return (
     <div className="space-y-6">
       {/* Overview Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <section aria-labelledby="subscriptions-metrics-heading" className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <h2 id="subscriptions-metrics-heading" className="sr-only">
+          Subscription Metrics Overview
+        </h2>
         <div className="p-4 rounded-xl bg-[#141822] border border-[#263045]">
           <span className="text-xs text-[#A5ADBE] font-medium">Active Subscriptions</span>
           <span className="text-2xl font-black font-mono text-[#F5F7FA] block mt-1">
             {activeSubs.length} services
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Total monthly drain: {formatRupees(totalMonthlySubCost)}/mo
           </p>
         </div>
@@ -52,7 +61,7 @@ export const SubscriptionsPage: React.FC = () => {
           <span className="text-2xl font-black font-mono text-[#9875FF] block mt-1">
             {metrics.upcomingCommitmentsCount} due
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Reserved cash: {formatRupees(metrics.upcomingCommitmentsTotal)}
           </p>
         </div>
@@ -60,13 +69,13 @@ export const SubscriptionsPage: React.FC = () => {
         <div className="p-4 rounded-xl bg-[#141822] border border-[#263045]">
           <span className="text-xs text-[#A5ADBE] font-medium">Discretionary Buffer Impact</span>
           <span className="text-2xl font-black font-mono text-[#63E5F4] block mt-1">
-            ~{formatRupees(Math.round(totalMonthlySubCost / metrics.inclusiveDaysRemaining))}/d
+            ~{formatRupees(dailySubImpact)}/d
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Daily allowance cost absorbed by recurring services.
           </p>
         </div>
-      </div>
+      </section>
 
       {/* Tabs & Action Row */}
       <div className="p-4 sm:p-5 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">

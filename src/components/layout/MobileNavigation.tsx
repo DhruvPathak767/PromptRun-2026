@@ -26,7 +26,7 @@ export const MobileNavigation: React.FC<MobileNavProps> = ({ onOpenQuickAction }
           to="/"
           end
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-xs font-medium transition-colors ${
               isActive ? 'text-[#C8FF4D]' : 'text-[#A5ADBE] hover:text-[#F5F7FA]'
             }`
           }
@@ -38,7 +38,7 @@ export const MobileNavigation: React.FC<MobileNavProps> = ({ onOpenQuickAction }
         <NavLink
           to="/budget"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-xs font-medium transition-colors ${
               isActive ? 'text-[#C8FF4D]' : 'text-[#A5ADBE] hover:text-[#F5F7FA]'
             }`
           }
@@ -59,7 +59,7 @@ export const MobileNavigation: React.FC<MobileNavProps> = ({ onOpenQuickAction }
         <NavLink
           to="/simulator"
           className={({ isActive }) =>
-            `relative flex flex-col items-center gap-1 p-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+            `relative flex flex-col items-center gap-1 p-1.5 rounded-lg text-xs font-medium transition-colors ${
               isActive ? 'text-[#C8FF4D]' : 'text-[#A5ADBE] hover:text-[#F5F7FA]'
             }`
           }
@@ -74,7 +74,7 @@ export const MobileNavigation: React.FC<MobileNavProps> = ({ onOpenQuickAction }
         <NavLink
           to="/transactions"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-xs font-medium transition-colors ${
               isActive ? 'text-[#C8FF4D]' : 'text-[#A5ADBE] hover:text-[#F5F7FA]'
             }`
           }
@@ -86,7 +86,7 @@ export const MobileNavigation: React.FC<MobileNavProps> = ({ onOpenQuickAction }
         <NavLink
           to="/goals"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+            `flex flex-col items-center gap-1 p-1.5 rounded-lg text-xs font-medium transition-colors ${
               isActive ? 'text-[#C8FF4D]' : 'text-[#A5ADBE] hover:text-[#F5F7FA]'
             }`
           }

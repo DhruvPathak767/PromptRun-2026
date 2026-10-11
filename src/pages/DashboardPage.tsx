@@ -58,9 +58,9 @@ export const DashboardPage: React.FC = () => {
         <div className="flex items-center justify-between pb-4 border-b border-[#263045]/60">
           <div className="flex items-center gap-2">
             <Receipt className="w-4 h-4 text-[#C8FF4D]" />
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               Recent Activity
-            </h3>
+            </h2>
           </div>
           <Link
             to="/transactions"
@@ -98,7 +98,7 @@ export const DashboardPage: React.FC = () => {
                     <span className="text-xs font-semibold text-[#F5F7FA] block truncate">
                       {tx.description}
                     </span>
-                    <span className="text-[11px] text-[#A5ADBE]">
+                    <span className="text-xs text-[#A5ADBE]">
                       {tx.date} • {tx.category} {tx.isFixed ? '(Fixed)' : ''}
                     </span>
                   </div>
@@ -117,7 +117,7 @@ export const DashboardPage: React.FC = () => {
                     {tx.type === 'income' ? '+' : tx.type === 'savings_transfer' ? '' : '−'}
                     {formatRupees(tx.amount)}
                   </span>
-                  <span className="text-[10px] text-[#6B778C] capitalize">
+                  <span className="text-xs text-[#A5ADBE] capitalize">
                     {tx.type.replace('_', ' ')}
                   </span>
                 </div>

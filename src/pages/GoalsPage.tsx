@@ -33,7 +33,7 @@ export const GoalsPage: React.FC = () => {
 
         <div className="flex items-center gap-3">
           <div className="p-3 rounded-xl bg-[#141822] border border-[#263045] text-right">
-            <span className="text-[10px] text-[#A5ADBE] uppercase font-bold block">
+            <span className="text-xs text-[#A5ADBE] uppercase font-bold block">
               Total Saved Reserves
             </span>
             <span className="text-xl font-black font-mono text-[#34D399]">

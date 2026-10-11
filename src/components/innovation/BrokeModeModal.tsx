@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { AlertOctagon, CheckCircle2, Zap } from 'lucide-react'
-import confetti from 'canvas-confetti'
+import { triggerConfetti } from '../../utils/confetti'
 import { Modal } from '../common/Modal'
 import { useFinance } from '../../state/useFinance'
 import { formatRupees } from '../../finance/financeEngine'
+import {
+  selectActiveSubscriptions,
+  selectEmergencyBailoutMetrics,
+} from '../../finance/selectors'
 import { playFanfareSound } from '../../lib/soundEffects'
 
 interface BrokeModeModalProps {
@@ -15,21 +19,22 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
   const { state, metrics, toggleSubscription, addToast } = useFinance()
   const [executed, setExecuted] = useState(false)
 
-  // Identify active non-essential subscriptions that can be frozen
-  const activeSubs = state.subscriptions.filter((s) => s.active)
-  const potentialSubSavings = activeSubs.reduce((acc, s) => acc + s.price, 0)
-
-  // Calculate emergency allowance reduction for remaining days
-  const daysLeft = Math.max(1, metrics.inclusiveDaysRemaining)
-  const emergencyTargetDaily = Math.max(80, Math.round(metrics.safeDailyAllowance * 0.6))
-  const dailyCut = Math.max(0, metrics.safeDailyAllowance - emergencyTargetDaily)
-  const totalAllowanceSavings = dailyCut * daysLeft
-
-  // Potential emergency goal unlock
+  // Identify active non-essential subscriptions and compute emergency triage metrics
+  const activeSubs = selectActiveSubscriptions(state.subscriptions)
   const emergencyGoal = state.goals.find((g) => g.currentAmount > 0)
-  const emergencyGoalLiquidity = emergencyGoal ? Math.min(emergencyGoal.currentAmount, 500) : 0
-
-  const totalBufferRecoverable = potentialSubSavings + totalAllowanceSavings + emergencyGoalLiquidity
+  const {
+    potentialSubSavings,
+    emergencyTargetDaily,
+    dailyCut,
+    totalAllowanceSavings,
+    emergencyGoalLiquidity,
+    totalBufferRecoverable,
+  } = selectEmergencyBailoutMetrics(
+    state.subscriptions,
+    metrics.safeDailyAllowance,
+    metrics.inclusiveDaysRemaining,
+    state.goals
+  )
 
   const handleExecuteBailout = () => {
     // 1. Pause active subscriptions
@@ -40,16 +45,12 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
     // 2. Play celebratory fanfare sound
     playFanfareSound()
 
-    try {
-      confetti({
-        particleCount: 60,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ['#C8FF4D', '#63E5F4', '#FFB340'],
-      })
-    } catch {
-      // Ignore
-    }
+    triggerConfetti({
+      particleCount: 60,
+      spread: 80,
+      origin: { y: 0.6 },
+      colors: ['#C8FF4D', '#63E5F4', '#FFB340'],
+    })
 
     setExecuted(true)
 
@@ -81,7 +82,7 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
             <h4 className="text-xs font-bold font-display text-[#F5F7FA]">
               Emergency Liquidity Diagnostic
             </h4>
-            <p className="text-[11px] text-[#A5ADBE] mt-0.5 leading-relaxed">
+            <p className="text-xs text-[#A5ADBE] mt-0.5 leading-relaxed">
               Current Liquid Cash: <strong className="font-mono text-[#F5F7FA]">{formatRupees(metrics.cashBalance)}</strong> •
               Discretionary Buffer: <strong className={`font-mono ${metrics.availableDiscretionaryFunds >= 0 ? 'text-[#34D399]' : 'text-[#FF5C5C]'}`}>
                 {formatRupees(metrics.availableDiscretionaryFunds)}
@@ -106,7 +107,7 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
                 <span className="text-xs font-semibold text-[#F5F7FA] block">
                   Freeze {activeSubs.length} Active Subscriptions
                 </span>
-                <span className="text-[10px] text-[#A5ADBE]">
+                <span className="text-xs text-[#A5ADBE]">
                   {activeSubs.map((s) => s.name).join(', ') || 'No active subscriptions'}
                 </span>
               </div>
@@ -126,8 +127,8 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
                 <span className="text-xs font-semibold text-[#F5F7FA] block">
                   Ration Daily Spending to {formatRupees(emergencyTargetDaily)}/day
                 </span>
-                <span className="text-[10px] text-[#A5ADBE]">
-                  Save {formatRupees(dailyCut)}/day over the remaining {daysLeft} days of the cycle
+                <span className="text-xs text-[#A5ADBE]">
+                  Save {formatRupees(dailyCut)}/day over the remaining {metrics.inclusiveDaysRemaining} days of the cycle
                 </span>
               </div>
             </div>
@@ -146,7 +147,7 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
                 <span className="text-xs font-semibold text-[#F5F7FA] block">
                   Goal Vault Emergency Micro-Shield
                 </span>
-                <span className="text-[10px] text-[#A5ADBE]">
+                <span className="text-xs text-[#A5ADBE]">
                   {emergencyGoalLiquidity > 0
                     ? `Safely re-allocate ₹${emergencyGoalLiquidity} from ${emergencyGoal?.name || 'vault'} to avoid default`
                     : 'Goal vaults are currently zero'}
@@ -162,7 +163,7 @@ export const BrokeModeModal: React.FC<BrokeModeModalProps> = ({ isOpen, onClose 
         {/* Total Recoverable Buffer Summary */}
         <div className="p-4 rounded-xl bg-[#1B2130] border border-[#263045] flex items-center justify-between">
           <div>
-            <span className="text-[10px] uppercase font-bold text-[#A5ADBE] block">
+            <span className="text-xs uppercase font-bold text-[#A5ADBE] block">
               Total Buffer Recoverable
             </span>
             <span className="text-xs text-[#A5ADBE]">

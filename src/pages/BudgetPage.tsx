@@ -6,6 +6,12 @@ import {
 } from 'lucide-react'
 import { useFinance } from '../state/useFinance'
 import { formatRupees } from '../finance/financeEngine'
+import {
+  selectTransactionsTotal,
+  selectHypotheticalDailyImpact,
+  selectVariableDiscretionarySpend,
+  selectFixedExpensesSoFar,
+} from '../finance/selectors'
 
 export const BudgetPage: React.FC = () => {
   const { state, metrics, setCurrentDay } = useFinance()
@@ -17,27 +23,30 @@ export const BudgetPage: React.FC = () => {
   // Commitments due on selected day
   const dayCommitments = state.commitments.filter((c) => c.dueDay === selectedDay)
 
-  const dayTotalSpend = dayTransactions
-    .filter((tx) => tx.type === 'expense' || tx.type === 'bill_payment')
-    .reduce((sum, tx) => sum + tx.amount, 0)
+  const dayTotalSpend = selectTransactionsTotal(
+    dayTransactions.filter((tx) => tx.type === 'expense' || tx.type === 'bill_payment')
+  )
 
   // What-If Impact preview calculator: how a ₹X purchase impacts daily allowance
   const [hypoPurchase, setHypoPurchase] = useState<number>(500)
-  const hypoAllowanceImpact =
-    metrics.inclusiveDaysRemaining > 0
-      ? Math.round(hypoPurchase / metrics.inclusiveDaysRemaining)
-      : 0
+  const hypoAllowanceImpact = selectHypotheticalDailyImpact(
+    hypoPurchase,
+    metrics.inclusiveDaysRemaining
+  )
 
   return (
     <div className="space-y-6">
       {/* Overview Metric Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <section aria-labelledby="budget-overview-heading" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <h2 id="budget-overview-heading" className="sr-only">
+          30-Day Budget Key Rates
+        </h2>
         <div className="p-4 rounded-xl bg-[#141822] border border-[#263045]">
           <span className="text-xs text-[#A5ADBE] font-medium">Safe Daily Spending Rate</span>
           <span className="text-2xl font-black font-mono text-[#C8FF4D] block mt-1">
             {formatRupees(metrics.safeDailyAllowance)}/day
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Across {metrics.inclusiveDaysRemaining} remaining days (Day {state.currentDay}..30).
           </p>
         </div>
@@ -47,7 +56,7 @@ export const BudgetPage: React.FC = () => {
           <span className="text-2xl font-black font-mono text-[#63E5F4] block mt-1">
             {formatRupees(metrics.availableDiscretionaryFunds)}
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Total unallocated capital for spontaneous living.
           </p>
         </div>
@@ -57,7 +66,7 @@ export const BudgetPage: React.FC = () => {
           <span className="text-2xl font-black font-mono text-[#9875FF] block mt-1">
             {formatRupees(metrics.upcomingCommitmentsTotal)}
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             {metrics.upcomingCommitmentsCount} upcoming bills & active subscriptions.
           </p>
         </div>
@@ -67,19 +76,19 @@ export const BudgetPage: React.FC = () => {
           <span className="text-2xl font-black font-mono text-[#34D399] block mt-1">
             {formatRupees(metrics.outstandingPlannedSavingsTotal)}
           </span>
-          <p className="text-[11px] text-[#A5ADBE] mt-1">
+          <p className="text-xs text-[#A5ADBE] mt-1">
             Cycle contributions reserved for goals.
           </p>
         </div>
-      </div>
+      </section>
 
       {/* 30-Day Calendar Grid */}
       <div className="p-5 sm:p-6 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#263045]/60">
           <div>
-            <h3 className="text-base font-bold font-display text-[#F5F7FA] flex items-center gap-2">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA] flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#C8FF4D]" /> 30-Day Cycle Timeline & Calendar
-            </h3>
+            </h2>
             <p className="text-xs text-[#A5ADBE] mt-0.5">
               Click any cycle day to inspect transactions, scheduled obligations, and spending burn.
             </p>
@@ -120,9 +129,11 @@ export const BudgetPage: React.FC = () => {
             const isSelected = day === selectedDay
 
             // Spending on this day
-            const spend = state.transactions
-              .filter((tx) => tx.cycleDay === day && (tx.type === 'expense' || tx.type === 'bill_payment'))
-              .reduce((sum, tx) => sum + tx.amount, 0)
+            const spend = selectTransactionsTotal(
+              state.transactions.filter(
+                (tx) => tx.cycleDay === day && (tx.type === 'expense' || tx.type === 'bill_payment')
+              )
+            )
 
             // Obligations due
             const hasCommitment = state.commitments.some((c) => c.dueDay === day) ||
@@ -162,15 +173,15 @@ export const BudgetPage: React.FC = () => {
 
                 <div className="w-full">
                   {spend > 0 ? (
-                    <span className="text-[11px] font-mono font-bold text-[#FF5C5C] block truncate">
+                    <span className="text-xs font-mono font-bold text-[#FF5C5C] block truncate">
                       −₹{spend}
                     </span>
                   ) : isFuture ? (
-                    <span className="text-[10px] font-mono text-[#6B778C] block truncate">
+                    <span className="text-xs font-mono text-[#A5ADBE] block truncate">
                       ~₹{metrics.safeDailyAllowance}
                     </span>
                   ) : (
-                    <span className="text-[10px] text-[#6B778C] block">₹0</span>
+                    <span className="text-xs text-[#A5ADBE] block">₹0</span>
                   )}
                 </div>
               </button>
@@ -188,7 +199,7 @@ export const BudgetPage: React.FC = () => {
               <h3 className="text-sm font-bold font-display text-[#F5F7FA]">
                 Day {selectedDay} Breakdown
               </h3>
-              <span className="text-[11px] text-[#A5ADBE]">
+              <span className="text-xs text-[#A5ADBE]">
                 {selectedDay === state.currentDay
                   ? 'Today (Current Position)'
                   : selectedDay < state.currentDay
@@ -229,7 +240,7 @@ export const BudgetPage: React.FC = () => {
               Ledger Transactions ({dayTransactions.length}):
             </span>
             {dayTransactions.length === 0 ? (
-              <p className="text-xs text-[#6B778C] py-2 italic">
+              <p className="text-xs text-[#A5ADBE] py-2 italic">
                 No recorded transactions on Day {selectedDay}.
               </p>
             ) : (
@@ -241,7 +252,7 @@ export const BudgetPage: React.FC = () => {
                   >
                     <div>
                       <span className="font-medium text-[#F5F7FA] block">{tx.description}</span>
-                      <span className="text-[10px] text-[#A5ADBE]">{tx.category}</span>
+                      <span className="text-xs text-[#A5ADBE]">{tx.category}</span>
                     </div>
                     <span
                       className={`font-mono font-bold ${
@@ -263,7 +274,7 @@ export const BudgetPage: React.FC = () => {
               <Info className="w-4 h-4" />
               <span>Purchase-to-Allowance Elasticity</span>
             </div>
-            <p className="text-[11px] text-[#A5ADBE] leading-relaxed">
+            <p className="text-xs text-[#A5ADBE] leading-relaxed">
               If you spend an extra ₹{hypoPurchase} today, your daily spending limit for every remaining{' '}
               {metrics.inclusiveDaysRemaining} days drops by{' '}
               <strong className="text-[#FF5C5C] font-mono">
@@ -282,7 +293,7 @@ export const BudgetPage: React.FC = () => {
                 onChange={(e) => setHypoPurchase(Number(e.target.value))}
                 className="flex-1 accent-[#C8FF4D]"
               />
-              <span className="font-mono text-[11px] text-[#F5F7FA]">₹{hypoPurchase}</span>
+              <span className="font-mono text-xs text-[#F5F7FA]">₹{hypoPurchase}</span>
             </div>
           </div>
         </div>
@@ -340,9 +351,15 @@ export const BudgetPage: React.FC = () => {
             <div className="p-3.5 rounded-xl bg-[#1B2130]/60 border border-[#263045]">
               <span className="text-xs font-medium text-[#A5ADBE] block">Fixed Bills & Obligations</span>
               <span className="text-base font-bold font-mono text-[#9875FF] block mt-1">
-                {formatRupees(metrics.totalExpenses - metrics.spendingPace.actualDailyAverage * Math.max(1, state.currentDay - 1))}
+                {formatRupees(
+                  selectFixedExpensesSoFar(
+                    metrics.totalExpenses,
+                    metrics.spendingPace.actualDailyAverage,
+                    state.currentDay
+                  )
+                )}
               </span>
-              <p className="text-[10px] text-[#6B778C] mt-0.5">
+              <p className="text-xs text-[#A5ADBE] mt-0.5">
                 Predictable commitments that cannot be easily skipped.
               </p>
             </div>
@@ -350,9 +367,14 @@ export const BudgetPage: React.FC = () => {
             <div className="p-3.5 rounded-xl bg-[#1B2130]/60 border border-[#263045]">
               <span className="text-xs font-medium text-[#A5ADBE] block">Variable Discretionary Spend</span>
               <span className="text-base font-bold font-mono text-[#C8FF4D] block mt-1">
-                {formatRupees(metrics.spendingPace.actualDailyAverage * Math.max(1, state.currentDay - 1))}
+                {formatRupees(
+                  selectVariableDiscretionarySpend(
+                    metrics.spendingPace.actualDailyAverage,
+                    state.currentDay
+                  )
+                )}
               </span>
-              <p className="text-[10px] text-[#6B778C] mt-0.5">
+              <p className="text-xs text-[#A5ADBE] mt-0.5">
                 Food, leisure, and shopping choices controllable daily.
               </p>
             </div>

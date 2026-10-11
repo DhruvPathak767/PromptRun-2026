@@ -22,7 +22,7 @@ export const PresetScenarios: React.FC<PresetScenariosProps> = ({ onSelectPreset
             <span className="text-xs font-bold text-[#F5F7FA] block group-hover:text-[#63E5F4] transition-colors line-clamp-1">
               {preset.title}
             </span>
-            <span className="text-[11px] font-mono text-[#A5ADBE] block mt-1">
+            <span className="text-xs font-mono text-[#A5ADBE] block mt-1">
               ₹{preset.amount} • {preset.type.replace('_', ' ')}
             </span>
           </button>

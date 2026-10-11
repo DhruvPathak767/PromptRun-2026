@@ -17,6 +17,7 @@ interface PageHeaderProps {
   onOpenImpulseBuster?: () => void
   onOpenVibeCard?: () => void
   onOpenBrokeMode?: () => void
+  onOpenChaosMode?: () => void
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -26,6 +27,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   onOpenImpulseBuster,
   onOpenVibeCard,
   onOpenBrokeMode,
+  onOpenChaosMode,
 }) => {
   const { state, metrics, insights, setCurrentDay } = useFinance()
 
@@ -50,7 +52,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <h1 className="text-lg sm:text-xl md:text-2xl font-bold font-display text-[#F5F7FA] tracking-tight truncate">
               {title}
             </h1>
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#1C2433] text-[#A5ADBE] border border-[#263045] shrink-0">
+            <span className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#1C2433] text-[#A5ADBE] border border-[#263045] shrink-0">
               Demo Session
             </span>
           </div>
@@ -66,7 +68,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <button
               onClick={handlePrevDay}
               disabled={state.currentDay <= 1}
-              className="p-1 rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1B2130] disabled:opacity-30 disabled:pointer-events-none transition-colors"
+              className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1B2130] disabled:opacity-30 disabled:pointer-events-none transition-colors"
               aria-label="Previous cycle day"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -74,12 +76,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <div className="px-2 sm:px-2.5 flex items-center gap-1.5 text-xs font-mono font-semibold text-[#F5F7FA]">
               <Calendar className="w-3.5 h-3.5 text-[#C8FF4D]" />
               <span>Day {state.currentDay}</span>
-              <span className="text-[#6B778C]">/30</span>
+              <span className="text-[#A5ADBE]">/30</span>
             </div>
             <button
               onClick={handleNextDay}
               disabled={state.currentDay >= 30}
-              className="p-1 rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1B2130] disabled:opacity-30 disabled:pointer-events-none transition-colors"
+              className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1B2130] disabled:opacity-30 disabled:pointer-events-none transition-colors"
               aria-label="Advance cycle day"
             >
               <ChevronRight className="w-4 h-4" />
@@ -94,7 +96,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           >
             <Sparkles className="w-4 h-4 text-[#9875FF]" />
             {insights.length > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#9875FF] text-[10px] font-bold text-white flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 w-4.5 h-4.5 rounded-full bg-[#9875FF] text-xs font-bold text-white flex items-center justify-center">
                 {insights.length}
               </span>
             )}
@@ -139,6 +141,19 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             >
               <span className="text-xs">🚨</span>
               <span className="hidden xl:inline">Broke Mode</span>
+            </button>
+          )}
+
+          {/* Chaos Mode Shock Trigger */}
+          {onOpenChaosMode && (
+            <button
+              onClick={onOpenChaosMode}
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl text-xs font-semibold bg-[#141822] border border-[#FF5C5C]/40 text-[#FF5C5C] hover:bg-[#FF5C5C]/10 transition-all focus:outline-none focus:ring-2 focus:ring-[#FF5C5C] shrink-0"
+              title="Chaos Mode: Simulate unexpected financial shocks & resilience"
+              aria-label="Chaos Mode Financial Shock Simulator"
+            >
+              <span className="text-xs">💥</span>
+              <span className="hidden xl:inline">Chaos Mode</span>
             </button>
           )}
 

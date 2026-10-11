@@ -41,7 +41,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
           ))}
         </div>
 
-        <div className="text-center text-[11px] text-[#A5ADBE]">
+        <div className="text-center text-xs text-[#A5ADBE]">
           Tip: Press <kbd className="px-1.5 py-0.5 rounded bg-[#1B2130] font-mono text-[#F5F7FA]">?</kbd> anytime to toggle this modal.
         </div>
       </div>

@@ -57,7 +57,7 @@ export const InsightsPage: React.FC = () => {
               A transparent, deterministic 0–100 health index based on your discretionary cushion,
               pacing velocity, upcoming commitment obligations, and savings targets.
             </p>
-            <span className="inline-block mt-2 text-[11px] text-[#6B778C]">
+            <span className="inline-block mt-2 text-xs text-[#A5ADBE]">
               Notice: This is a scenario-based simulator indicator, not a credit rating or formal financial advice.
             </span>
           </div>
@@ -82,7 +82,7 @@ export const InsightsPage: React.FC = () => {
               >
                 {metrics.healthBand}
               </span>
-              <span className="text-[11px] text-[#A5ADBE] block mt-0.5">
+              <span className="text-xs text-[#A5ADBE] block mt-0.5">
                 {metrics.healthScore >= 80
                   ? 'Strong cash cushion & safe burn pace'
                   : metrics.healthScore >= 55
@@ -112,7 +112,7 @@ export const InsightsPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between text-xs font-semibold text-[#F5F7FA]">
                   <span>{factor.name}</span>
-                  <span className="font-mono text-[11px] text-[#A5ADBE]">
+                  <span className="font-mono text-xs text-[#A5ADBE]">
                     {factor.score}/{factor.maxScore} pts
                   </span>
                 </div>
@@ -130,7 +130,7 @@ export const InsightsPage: React.FC = () => {
                   />
                 </div>
 
-                <p className="text-[11px] text-[#A5ADBE] mt-2 leading-relaxed">
+                <p className="text-xs text-[#A5ADBE] mt-2 leading-relaxed">
                   {factor.explanation}
                 </p>
               </div>
@@ -144,9 +144,9 @@ export const InsightsPage: React.FC = () => {
         <div className="flex items-center justify-between pb-4 border-b border-[#263045]/60">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#C8FF4D]" />
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               Actionable Recommendations & Risk Alerts ({insights.length})
-            </h3>
+            </h2>
           </div>
           <span className="text-xs text-[#A5ADBE]">
             Derived directly from active calculations
@@ -186,7 +186,7 @@ export const InsightsPage: React.FC = () => {
                       <span>{insight.title}</span>
                     </h4>
                     <span
-                      className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
+                      className={`text-xs font-bold uppercase px-1.5 py-0.5 rounded ${
                         insight.severity === 'high'
                           ? 'bg-[#FF5C5C] text-white'
                           : insight.severity === 'medium'
@@ -203,7 +203,7 @@ export const InsightsPage: React.FC = () => {
                   </p>
 
                   {insight.financialImpact && (
-                    <div className="mt-3 p-2 rounded-lg bg-[#141822]/80 border border-white/5 text-[11px] font-mono text-[#63E5F4]">
+                    <div className="mt-3 p-2 rounded-lg bg-[#141822]/80 border border-white/5 text-xs font-mono text-[#63E5F4]">
                       Financial Impact: {insight.financialImpact}
                     </div>
                   )}

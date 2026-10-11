@@ -40,8 +40,8 @@ export const CommitmentTable: React.FC<CommitmentTableProps> = ({
                     Day {c.dueDay}{' '}
                     {!c.isPaid && (
                       <span
-                        className={`text-[10px] ml-1 ${
-                          daysAway <= 3 ? 'text-[#FF5C5C] font-bold' : 'text-[#6B778C]'
+                        className={`text-xs ml-1 ${
+                          daysAway <= 3 ? 'text-[#FF5C5C] font-bold' : 'text-[#A5ADBE]'
                         }`}
                       >
                         ({daysAway === 0 ? 'Today' : daysAway > 0 ? `in ${daysAway}d` : 'Past due'})
@@ -54,7 +54,7 @@ export const CommitmentTable: React.FC<CommitmentTableProps> = ({
                   </td>
                   <td className="py-3 px-2">
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                         c.isPaid
                           ? 'bg-[#34D399]/15 text-[#34D399]'
                           : 'bg-[#FFB340]/15 text-[#FFB340]'
@@ -75,7 +75,7 @@ export const CommitmentTable: React.FC<CommitmentTableProps> = ({
                       )}
                       <button
                         onClick={() => onDelete(c.id)}
-                        className="p-1 rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] transition-colors"
+                        className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] transition-colors"
                         aria-label={`Delete ${c.name}`}
                       >
                         <Trash2 className="w-3.5 h-3.5" />

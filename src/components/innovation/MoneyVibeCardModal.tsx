@@ -1,6 +1,6 @@
 import React from 'react'
 import { Share2, Check } from 'lucide-react'
-import confetti from 'canvas-confetti'
+import { triggerConfetti } from '../../utils/confetti'
 import { Modal } from '../common/Modal'
 import { useFinance } from '../../state/useFinance'
 import { formatRupees } from '../../finance/financeEngine'
@@ -49,15 +49,11 @@ export const MoneyVibeCardModal: React.FC<MoneyVibeCardModalProps> = ({ isOpen, 
 
     navigator.clipboard?.writeText(text).then(() => {
       setCopied(true)
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.7 },
-        })
-      } catch {
-        // Ignore
-      }
+      triggerConfetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.7 },
+      })
       addToast({
         type: 'success',
         title: 'Copied to Clipboard! 📋',
@@ -92,7 +88,7 @@ export const MoneyVibeCardModal: React.FC<MoneyVibeCardModalProps> = ({ isOpen, 
 
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#A5ADBE] block">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#A5ADBE] block">
                 RupeeFlow 30-Day Vibe • Cycle Day {state.currentDay}
               </span>
               <h3 className="text-xl font-bold font-display text-[#F5F7FA] mt-1">
@@ -109,35 +105,35 @@ export const MoneyVibeCardModal: React.FC<MoneyVibeCardModalProps> = ({ isOpen, 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 gap-3 pt-2">
             <div className="p-3 rounded-xl bg-[#0B0D12]/70 border border-[#263045]/60">
-              <span className="text-[10px] text-[#A5ADBE] block">Safe Daily Allowance</span>
+              <span className="text-xs text-[#A5ADBE] block">Safe Daily Allowance</span>
               <span className="text-lg font-black font-mono text-[#C8FF4D]">
                 {formatRupees(metrics.safeDailyAllowance)}/d
               </span>
             </div>
 
             <div className="p-3 rounded-xl bg-[#0B0D12]/70 border border-[#263045]/60">
-              <span className="text-[10px] text-[#A5ADBE] block">Health Score</span>
+              <span className="text-xs text-[#A5ADBE] block">Health Score</span>
               <span className="text-lg font-black font-mono text-[#63E5F4]">
                 {metrics.healthScore}/100
               </span>
             </div>
 
             <div className="p-3 rounded-xl bg-[#0B0D12]/70 border border-[#263045]/60">
-              <span className="text-[10px] text-[#A5ADBE] block">Saved Reserves</span>
+              <span className="text-xs text-[#A5ADBE] block">Saved Reserves</span>
               <span className="text-lg font-black font-mono text-[#34D399]">
                 {formatRupees(metrics.savingsBalance)}
               </span>
             </div>
 
             <div className="p-3 rounded-xl bg-[#0B0D12]/70 border border-[#263045]/60">
-              <span className="text-[10px] text-[#A5ADBE] block">Day 30 Estimated Cash</span>
+              <span className="text-xs text-[#A5ADBE] block">Day 30 Estimated Cash</span>
               <span className="text-lg font-black font-mono text-[#F5F7FA]">
                 {formatRupees(metrics.projectedMonthEndCash)}
               </span>
             </div>
           </div>
 
-          <div className="pt-2 text-center text-[10px] font-mono text-[#6B778C]">
+          <div className="pt-2 text-center text-xs font-mono text-[#A5ADBE]">
             rupeeflow • ₹10,000 monthly challenge • survive the month
           </div>
         </div>

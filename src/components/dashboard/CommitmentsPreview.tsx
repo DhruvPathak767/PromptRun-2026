@@ -15,9 +15,9 @@ export const CommitmentsPreview: React.FC = () => {
         <div className="flex items-center justify-between pb-3 border-b border-[#263045]/60">
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4 text-[#9875FF]" />
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               Upcoming Commitments
-            </h3>
+            </h2>
           </div>
           <Link
             to="/subscriptions"
@@ -52,11 +52,11 @@ export const CommitmentsPreview: React.FC = () => {
                       <span className="text-xs font-bold text-[#F5F7FA] truncate">
                         {c.name}
                       </span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#141822] text-[#A5ADBE] border border-[#263045]">
+                      <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-[#141822] text-[#A5ADBE] border border-[#263045]">
                         {c.category}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 mt-1 text-[11px] text-[#A5ADBE]">
+                    <div className="flex items-center gap-2 mt-1 text-xs text-[#A5ADBE]">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-[#C8FF4D]" /> Due Day {c.dueDay}
                       </span>
@@ -78,7 +78,7 @@ export const CommitmentsPreview: React.FC = () => {
                     {!isVirtualSub && (
                       <button
                         onClick={() => markCommitmentPaid(c.id)}
-                        className="p-1.5 rounded-lg bg-[#C8FF4D]/10 hover:bg-[#C8FF4D] text-[#C8FF4D] hover:text-[#0B0D12] transition-colors focus:outline-none focus:ring-1 focus:ring-[#C8FF4D]"
+                        className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg bg-[#C8FF4D]/10 hover:bg-[#C8FF4D] text-[#C8FF4D] hover:text-[#0B0D12] transition-colors focus:outline-none focus:ring-1 focus:ring-[#C8FF4D]"
                         title="Mark as Paid"
                         aria-label={`Mark ${c.name} as paid`}
                       >

@@ -236,4 +236,146 @@ describe('RupeeFlow Scenario Simulator', () => {
     const newMetrics = calculateFinancialMetrics(nextState)
     expect(newMetrics.cashBalance).toBe(7501)
   })
+
+  it('guarantees deterministic output for repeated simulation calculations', () => {
+    const state = createTestState({ currentDay: 15 })
+    const scenario = {
+      id: 'test-deterministic',
+      type: 'unexpected_expense' as const,
+      title: 'Emergency Dentist',
+      description: 'Emergency dental visit',
+      amount: 1500,
+      category: 'Unexpected & Emergency' as const,
+    }
+
+    const sim1 = simulateScenario(state, scenario)
+    const sim2 = simulateScenario(state, scenario)
+
+    expect(sim1.simulated.cashBalance).toBe(sim2.simulated.cashBalance)
+    expect(sim1.deltas.cashBalanceDelta).toBe(sim2.deltas.cashBalanceDelta)
+    expect(sim1.deltas.dailyAllowanceDelta).toBe(sim2.deltas.dailyAllowanceDelta)
+    expect(sim1.simulated.availableDiscretionaryFunds).toBe(sim2.simulated.availableDiscretionaryFunds)
+  })
+
+  it('tests all scenario types: income, savings, add sub, cancel sub, commitment, adjust plan', () => {
+    const state = createTestState({
+      currentDay: 10,
+      goals: [
+        {
+          id: 'goal-laptop',
+          name: 'Tech Upgrade',
+          targetAmount: 5000,
+          currentAmount: 500,
+          plannedCycleContribution: 1000,
+          color: '#C8FF4D',
+          category: 'Tech',
+          iconName: 'Laptop',
+          description: '',
+        },
+      ],
+      subscriptions: [
+        {
+          id: 'sub-gym',
+          name: 'Gym',
+          price: 500,
+          billingDay: 20,
+          category: 'Personal Care',
+          active: true,
+        },
+      ],
+      transactions: [
+        {
+          id: 'hist-tx-1',
+          cycleDay: 2,
+          date: 'Day 2',
+          amount: 500,
+          description: 'Past Gym payment',
+          category: 'Personal Care',
+          type: 'bill_payment',
+          isFixed: true,
+        },
+      ],
+    })
+
+    // 1. Add Income
+    const incomeSim = simulateScenario(state, {
+      id: 'sim-inc',
+      type: 'add_income',
+      title: 'Stipend',
+      description: 'Monthly stipend',
+      amount: 1000,
+    })
+    expect(incomeSim.deltas.cashBalanceDelta).toBe(1000)
+
+    // 2. Savings Contribution
+    const savingsSim = simulateScenario(state, {
+      id: 'sim-sav',
+      type: 'savings_contribution',
+      title: 'Save to Tech',
+      description: 'Savings top-up',
+      amount: 500,
+      targetGoalId: 'goal-laptop',
+    })
+    expect(savingsSim.deltas.savingsDelta).toBe(500)
+
+    // 3. Add Subscription
+    const addSubSim = simulateScenario(state, {
+      id: 'sim-new-sub',
+      type: 'add_subscription',
+      title: 'ChatGPT Plus',
+      description: 'AI subscription',
+      amount: 199,
+      dueDay: 25,
+    })
+    expect(addSubSim.deltas.commitmentsDelta).toBe(199)
+
+    // 4. Cancel Subscription (Must remove future liability without deleting historical transactions!)
+    const cancelSubSim = simulateScenario(state, {
+      id: 'sim-cancel-sub',
+      type: 'cancel_subscription',
+      title: 'Cancel Gym',
+      description: 'Cancel gym membership',
+      amount: 0,
+      targetSubscriptionId: 'sub-gym',
+    })
+    expect(cancelSubSim.deltas.commitmentsDelta).toBe(-500)
+    // Historical transaction preserved in baseline
+    expect(state.transactions.length).toBe(1)
+
+    // 5. Add Commitment
+    const addCommitSim = simulateScenario(state, {
+      id: 'sim-commit',
+      type: 'add_commitment',
+      title: 'Electricity Bill',
+      description: 'Hostel power bill',
+      amount: 450,
+      dueDay: 22,
+    })
+    expect(addCommitSim.deltas.commitmentsDelta).toBe(450)
+
+    // 6. Adjust Savings Plan
+    const adjustPlanSim = simulateScenario(state, {
+      id: 'sim-adjust',
+      type: 'adjust_savings_plan',
+      title: 'Increase planned savings',
+      description: 'Budget re-allocation',
+      amount: 1500,
+      targetGoalId: 'goal-laptop',
+    })
+    expect(adjustPlanSim.simulated.outstandingPlannedSavingsTotal).toBe(1500)
+  })
+
+  it('correctly handles Day 1 and Day 30 boundary invariants', () => {
+    // Day 1
+    const day1State = createTestState({ currentDay: 1 })
+    const day1Metrics = calculateFinancialMetrics(day1State)
+    expect(day1Metrics.inclusiveDaysRemaining).toBe(30)
+    expect(day1Metrics.safeDailyAllowance).toBe(Math.floor(10000 / 30))
+
+    // Day 30 (Final Day)
+    const day30State = createTestState({ currentDay: 30 })
+    const day30Metrics = calculateFinancialMetrics(day30State)
+    expect(day30Metrics.inclusiveDaysRemaining).toBe(1) // Only today remains
+    expect(day30Metrics.safeDailyAllowance).toBe(10000) // All remaining discretionary available for day 30
+  })
 })

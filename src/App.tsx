@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { MotionConfig } from 'framer-motion'
 import { FinanceProvider } from './state/FinanceProvider'
 import { AppShell } from './components/layout/AppShell'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
@@ -45,27 +44,25 @@ const PageLoadingFallback: React.FC = () => (
 export const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <MotionConfig reducedMotion="user">
-        <FinanceProvider>
-          <BrowserRouter>
-            <Suspense fallback={<PageLoadingFallback />}>
-              <Routes>
-                <Route element={<AppShell />}>
-                  <Route path="/" element={<DashboardPage />} />
-                  <Route path="/transactions" element={<TransactionsPage />} />
-                  <Route path="/budget" element={<BudgetPage />} />
-                  <Route path="/goals" element={<GoalsPage />} />
-                  <Route path="/subscriptions" element={<SubscriptionsPage />} />
-                  <Route path="/simulator" element={<SimulatorPage />} />
-                  <Route path="/insights" element={<InsightsPage />} />
-                  <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Route>
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </FinanceProvider>
-      </MotionConfig>
+      <FinanceProvider>
+        <BrowserRouter>
+          <Suspense fallback={<PageLoadingFallback />}>
+            <Routes>
+              <Route element={<AppShell />}>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/transactions" element={<TransactionsPage />} />
+                <Route path="/budget" element={<BudgetPage />} />
+                <Route path="/goals" element={<GoalsPage />} />
+                <Route path="/subscriptions" element={<SubscriptionsPage />} />
+                <Route path="/simulator" element={<SimulatorPage />} />
+                <Route path="/insights" element={<InsightsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </FinanceProvider>
     </ErrorBoundary>
   )
 }

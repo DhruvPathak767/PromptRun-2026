@@ -109,7 +109,7 @@ export const ScenarioComparisonMatrix: React.FC<ScenarioComparisonMatrixProps> =
             <Sparkles className="w-4 h-4 text-[#63E5F4]" /> Plain-Language Consequence Analysis
           </h3>
           <span
-            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+            className={`text-xs font-bold px-2 py-0.5 rounded-full ${
               comparison.isAffordable
                 ? 'bg-[#C8FF4D]/15 text-[#C8FF4D]'
                 : 'bg-[#FF5C5C]/15 text-[#FF5C5C]'
@@ -182,7 +182,7 @@ export const ScenarioComparisonMatrix: React.FC<ScenarioComparisonMatrixProps> =
                     <th scope="row" aria-label={row.metric} className="py-3 pr-2 font-sans font-medium text-[#F5F7FA] text-left">
                       <div>
                         <span>{row.metric}</span>
-                        <span className="block text-[10px] text-[#6B778C] font-normal">
+                        <span className="block text-xs text-[#A5ADBE] font-normal">
                           {row.explanation}
                         </span>
                       </div>
@@ -194,7 +194,7 @@ export const ScenarioComparisonMatrix: React.FC<ScenarioComparisonMatrixProps> =
                     <td className="py-3 pl-2 text-right">
                       {row.isBand ? (
                         <span
-                          className={`text-[11px] font-sans font-bold px-1.5 py-0.5 rounded ${
+                          className={`text-xs font-sans font-bold px-1.5 py-0.5 rounded ${
                             row.simulated === 'Healthy'
                               ? 'bg-[#C8FF4D]/15 text-[#C8FF4D]'
                               : row.simulated === 'Needs Attention'
@@ -205,7 +205,7 @@ export const ScenarioComparisonMatrix: React.FC<ScenarioComparisonMatrixProps> =
                           {row.simulated}
                         </span>
                       ) : row.delta === 0 ? (
-                        <span className="text-[#6B778C]">±0</span>
+                        <span className="text-[#A5ADBE]">±0</span>
                       ) : (
                         <span
                           className={`font-bold ${

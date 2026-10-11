@@ -1,6 +1,6 @@
 import React from 'react'
 import { Flame } from 'lucide-react'
-import confetti from 'canvas-confetti'
+import { triggerConfetti } from '../../utils/confetti'
 import { useFinance } from '../../state/useFinance'
 
 export const SurvivalStreakBadge: React.FC = () => {
@@ -13,16 +13,12 @@ export const SurvivalStreakBadge: React.FC = () => {
   )
 
   const handleBadgeClick = (badgeName: string, perk: string) => {
-    try {
-      confetti({
-        particleCount: 45,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ['#C8FF4D', '#63E5F4', '#9875FF'],
-      })
-    } catch {
-      // Ignore in non-browser envs
-    }
+    triggerConfetti({
+      particleCount: 45,
+      spread: 60,
+      origin: { y: 0.8 },
+      colors: ['#C8FF4D', '#63E5F4', '#9875FF'],
+    })
 
     addToast({
       type: 'success',
@@ -74,11 +70,11 @@ export const SurvivalStreakBadge: React.FC = () => {
               <h3 className="text-sm font-bold font-display text-[#F5F7FA]">
                 Survive the Month Challenge
               </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#C8FF4D]/20 text-[#C8FF4D] font-bold">
+              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-[#C8FF4D]/20 text-[#C8FF4D] font-bold">
                 Day {state.currentDay} of 30
               </span>
             </div>
-            <p className="text-[11px] text-[#A5ADBE] mt-0.5">
+            <p className="text-xs text-[#A5ADBE] mt-0.5">
               Current Streak: <strong className="text-[#F5F7FA] font-mono">{state.currentDay} Days</strong> without budget exhaustion 🔥
             </p>
           </div>
@@ -86,7 +82,7 @@ export const SurvivalStreakBadge: React.FC = () => {
 
         <div className="flex items-center gap-3 self-end sm:self-auto">
           <div className="text-right">
-            <span className="text-[10px] text-[#A5ADBE] block uppercase font-bold">
+            <span className="text-xs text-[#A5ADBE] block uppercase font-bold">
               Survival Probability
             </span>
             <span
@@ -123,7 +119,7 @@ export const SurvivalStreakBadge: React.FC = () => {
               <span className="text-xs font-semibold text-[#F5F7FA] block truncate">
                 {b.name}
               </span>
-              <span className="text-[10px] text-[#A5ADBE] block truncate">
+              <span className="text-xs text-[#A5ADBE] block truncate">
                 {b.earned ? 'Unlocked ✨' : 'In Progress'}
               </span>
             </div>

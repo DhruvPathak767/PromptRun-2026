@@ -79,7 +79,11 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 rounded-xl bg-[#FF5C5C]/15 border border-[#FF5C5C]/30 text-xs text-[#FF5C5C]">
+          <div
+            id="tx-form-error"
+            role="alert"
+            className="p-3 rounded-xl bg-[#FF5C5C]/15 border border-[#FF5C5C]/30 text-xs text-[#FF5C5C]"
+          >
             {error}
           </div>
         )}
@@ -119,10 +123,13 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
             id="tx-desc"
             type="text"
             required
+            autoComplete="off"
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? 'tx-form-error' : undefined}
             placeholder="e.g. Campus Canteen Lunch, Metro Pass"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#6B778C] focus:outline-none focus:border-[#C8FF4D]"
+            className="w-full px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#A5ADBE] focus:outline-none focus:border-[#C8FF4D]"
           />
         </div>
 
@@ -141,10 +148,13 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
                 min="1"
                 max="50000"
                 required
+                autoComplete="off"
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? 'tx-form-error' : undefined}
                 placeholder="250"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full pl-7 pr-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs font-mono text-[#F5F7FA] placeholder-[#6B778C] focus:outline-none focus:border-[#C8FF4D]"
+                className="w-full pl-7 pr-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs font-mono text-[#F5F7FA] placeholder-[#A5ADBE] focus:outline-none focus:border-[#C8FF4D]"
               />
             </div>
           </div>
@@ -189,7 +199,7 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
         <div className="flex items-center justify-between p-3 rounded-xl bg-[#1B2130]/60 border border-[#263045]">
           <div>
             <span className="text-xs font-medium text-[#F5F7FA]">Fixed / Committed Bill</span>
-            <p className="text-[11px] text-[#A5ADBE]">
+            <p className="text-xs text-[#A5ADBE]">
               Fixed costs (rent, subscriptions) are separated from variable daily pacing.
             </p>
           </div>
@@ -209,10 +219,11 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
           <input
             id="tx-notes"
             type="text"
+            autoComplete="off"
             placeholder="Add any contextual note"
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            className="w-full px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#6B778C] focus:outline-none focus:border-[#C8FF4D]"
+            className="w-full px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#A5ADBE] focus:outline-none focus:border-[#C8FF4D]"
           />
         </div>
 

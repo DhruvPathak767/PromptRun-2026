@@ -104,11 +104,11 @@ export const FinancialMetricsGrid: React.FC = () => {
             <div className={`p-2 rounded-lg ${item.bgColor}`}>
               <item.icon className={`w-4 h-4 ${item.color}`} />
             </div>
-            <ArrowUpRight className="w-3.5 h-3.5 text-[#6B778C] group-hover:text-[#F5F7FA] transition-colors" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#A5ADBE] group-hover:text-[#F5F7FA] transition-colors" />
           </div>
 
           <div className="mt-3">
-            <span className="text-[11px] font-medium text-[#A5ADBE] block truncate">
+            <span className="text-xs font-medium text-[#A5ADBE] block truncate">
               {item.title}
             </span>
             <span
@@ -116,7 +116,7 @@ export const FinancialMetricsGrid: React.FC = () => {
             >
               {item.value}
             </span>
-            <p className="text-[10px] text-[#6B778C] mt-1 leading-tight line-clamp-1">
+            <p className="text-xs text-[#A5ADBE] mt-1 leading-tight line-clamp-1">
               {item.subtext}
             </p>
           </div>

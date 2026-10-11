@@ -13,6 +13,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Path Aliases */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Strict Type-Checking */
     "strict": true,
     "noImplicitAny": true,

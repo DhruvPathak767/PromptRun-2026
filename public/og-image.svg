@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#0B0D12"/>
+  <circle cx="200" cy="150" r="300" fill="#C8FF4D" fill-opacity="0.08" filter="blur(100px)"/>
+  <circle cx="1000" cy="450" r="350" fill="#9875FF" fill-opacity="0.1" filter="blur(120px)"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="#141822" stroke="#263045" stroke-width="2"/>
+  <text x="120" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#C8FF4D" letter-spacing="3">RUPEEFLOW COMMAND CENTER</text>
+  <text x="120" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="#F5F7FA">Broke But Functional</text>
+  <text x="120" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="600" fill="#A5ADBE">Survive the ₹10,000 / 30-Day Month</text>
+  <rect x="120" y="360" width="280" height="120" rx="16" fill="#1B2130" stroke="#263045" stroke-width="1.5"/>
+  <text x="150" y="405" font-family="system-ui, sans-serif" font-size="16" fill="#A5ADBE">Starting Cap</text>
+  <text x="150" y="445" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="#C8FF4D">₹10,000</text>
+  <rect x="430" y="360" width="280" height="120" rx="16" fill="#1B2130" stroke="#263045" stroke-width="1.5"/>
+  <text x="460" y="405" font-family="system-ui, sans-serif" font-size="16" fill="#A5ADBE">Decision Engine</text>
+  <text x="460" y="445" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="#63E5F4">What-If Lab</text>
+  <rect x="740" y="360" width="300" height="120" rx="16" fill="#1B2130" stroke="#263045" stroke-width="1.5"/>
+  <text x="770" y="405" font-family="system-ui, sans-serif" font-size="16" fill="#A5ADBE">Financial Health</text>
+  <text x="770" y="445" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="#9875FF">WCAG 2.2 AA</text>
+</svg>

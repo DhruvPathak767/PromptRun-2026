@@ -34,9 +34,9 @@ export const InsightsPreview: React.FC = () => {
         <div className="flex items-center justify-between pb-3 border-b border-[#263045]/60">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#C8FF4D]" />
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               Contextual Financial Insights
-            </h3>
+            </h2>
           </div>
           <Link
             to="/insights"
@@ -84,12 +84,12 @@ export const InsightsPreview: React.FC = () => {
                   </h4>
                 </div>
 
-                <p className="text-[11px] text-[#A5ADBE] mt-1 leading-relaxed">
+                <p className="text-xs text-[#A5ADBE] mt-1 leading-relaxed">
                   {insight.explanation}
                 </p>
 
                 {insight.financialImpact && (
-                  <p className="text-[11px] font-mono text-[#63E5F4] mt-1.5 font-medium">
+                  <p className="text-xs font-mono text-[#63E5F4] mt-1.5 font-medium">
                     Impact: {insight.financialImpact}
                   </p>
                 )}

@@ -67,11 +67,11 @@ export const Sidebar: React.FC = () => {
               <span className="font-display font-extrabold text-base tracking-tight text-[#F5F7FA]">
                 Rupee<span className="text-[#C8FF4D]">Flow</span>
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#1B2130] text-[#A5ADBE] border border-[#263045]">
+              <span className="text-xs uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#1B2130] text-[#A5ADBE] border border-[#263045]">
                 Gen Z
               </span>
             </div>
-            <p className="text-[11px] text-[#A5ADBE]">Make every rupee count.</p>
+            <p className="text-xs text-[#A5ADBE]">Make every rupee count.</p>
           </div>
         </NavLink>
 
@@ -91,7 +91,7 @@ export const Sidebar: React.FC = () => {
               style={{ width: `${(state.currentDay / 30) * 100}%` }}
             />
           </div>
-          <div className="flex justify-between items-center mt-2 text-[11px] text-[#A5ADBE]">
+          <div className="flex justify-between items-center mt-2 text-xs text-[#A5ADBE]">
             <span>{metrics.daysRemaining} days left</span>
             <span className="text-[#C8FF4D] font-mono font-medium">₹10,000 Cap</span>
           </div>
@@ -126,7 +126,7 @@ export const Sidebar: React.FC = () => {
                 <div className="flex items-center gap-1.5">
                   {item.badge && (
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                         item.badgeColor || 'bg-[#1C2433] text-[#A5ADBE]'
                       }`}
                     >
@@ -152,7 +152,7 @@ export const Sidebar: React.FC = () => {
               <span className="text-xs font-bold text-[#F5F7FA] truncate">Aarav Sharma</span>
               <UserCheck className="w-3 h-3 text-[#C8FF4D]" />
             </div>
-            <p className="text-[10px] text-[#A5ADBE] truncate">Client-Side Demo Session</p>
+            <p className="text-xs text-[#A5ADBE] truncate">Client-Side Demo Session</p>
           </div>
         </div>
       </div>

@@ -28,9 +28,9 @@ export const SettingsPage: React.FC = () => {
         <div className="flex items-center gap-2 pb-3 border-b border-[#263045]/60">
           <Calendar className="w-5 h-5 text-[#C8FF4D]" />
           <div>
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               30-Day Cycle Simulation Day
-            </h3>
+            </h2>
             <p className="text-xs text-[#A5ADBE]">
               Adjust the current cycle day to inspect how budget pacing, daily allowances, and forecasts evolve.
             </p>
@@ -90,9 +90,9 @@ export const SettingsPage: React.FC = () => {
         <div className="flex items-center gap-2 pb-3 border-b border-[#263045]/60">
           <HardDrive className="w-5 h-5 text-[#63E5F4]" />
           <div>
-            <h3 className="text-base font-bold font-display text-[#F5F7FA]">
+            <h2 className="text-base font-bold font-display text-[#F5F7FA]">
               Client-Side Persistence & Schema
-            </h3>
+            </h2>
             <p className="text-xs text-[#A5ADBE]">
               All data is stored purely in your browser localStorage under schema version 1.
             </p>

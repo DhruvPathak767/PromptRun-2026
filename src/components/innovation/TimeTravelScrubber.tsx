@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Play, Pause, RotateCcw, FastForward, AlertTriangle, ShieldCheck } from 'lucide-react'
 import { useFinance } from '../../state/useFinance'
 import { formatRupees } from '../../finance/financeEngine'
+import { selectDeficitCrashDay } from '../../finance/selectors'
 
 export const TimeTravelScrubber: React.FC = () => {
   const { state, metrics, setCurrentDay } = useFinance()
@@ -12,10 +13,7 @@ export const TimeTravelScrubber: React.FC = () => {
     ? (10000 - metrics.cashBalance) / (state.currentDay - 1)
     : 250
 
-  const zeroCashDay = dailySpendVelocity > 0
-    ? Math.min(30, Math.max(state.currentDay, Math.round(state.currentDay + metrics.cashBalance / dailySpendVelocity)))
-    : 30
-
+  const zeroCashDay = selectDeficitCrashDay(state.currentDay, metrics.cashBalance, dailySpendVelocity) ?? 30
   const willDepleteEarly = zeroCashDay < 30 && metrics.projectedMonthEndCash < 0
 
   // Auto-play cycle simulator animation
@@ -46,11 +44,11 @@ export const TimeTravelScrubber: React.FC = () => {
           <div>
             <h3 className="text-sm font-bold font-display text-[#F5F7FA] flex items-center gap-2">
               <span>30-Day Time-Travel Engine</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#1B2130] text-[#A5ADBE] border border-[#263045]">
+              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-[#1B2130] text-[#A5ADBE] border border-[#263045]">
                 Fast-Forward Lab
               </span>
             </h3>
-            <p className="text-[11px] text-[#A5ADBE] mt-0.5">
+            <p className="text-xs text-[#A5ADBE] mt-0.5">
               Scrub days to preview how your ₹10,000 cash pool & commitments evolve over time.
             </p>
           </div>
@@ -76,7 +74,7 @@ export const TimeTravelScrubber: React.FC = () => {
             type="button"
             onClick={() => setCurrentDay(1)}
             disabled={state.currentDay === 1}
-            className="p-1.5 rounded-xl bg-[#1B2130] hover:bg-[#263045] text-[#A5ADBE] hover:text-[#F5F7FA] border border-[#263045] disabled:opacity-40 transition-colors"
+            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl bg-[#1B2130] hover:bg-[#263045] text-[#A5ADBE] hover:text-[#F5F7FA] border border-[#263045] disabled:opacity-40 transition-colors"
             title="Reset to Day 1"
             aria-label="Reset to Day 1"
           >
@@ -107,21 +105,21 @@ export const TimeTravelScrubber: React.FC = () => {
       {/* Zero-Cash Deficit Forecast Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
         <div className="p-3 rounded-xl bg-[#1B2130]/80 border border-[#263045]">
-          <span className="text-[10px] text-[#A5ADBE] block uppercase font-bold">Days Remaining</span>
+          <span className="text-xs text-[#A5ADBE] block uppercase font-bold">Days Remaining</span>
           <span className="text-base font-mono font-bold text-[#F5F7FA]">
             {metrics.inclusiveDaysRemaining} Days
           </span>
         </div>
 
         <div className="p-3 rounded-xl bg-[#1B2130]/80 border border-[#263045]">
-          <span className="text-[10px] text-[#A5ADBE] block uppercase font-bold">Daily Burn Velocity</span>
+          <span className="text-xs text-[#A5ADBE] block uppercase font-bold">Daily Burn Velocity</span>
           <span className="text-base font-mono font-bold text-[#63E5F4]">
             ~{formatRupees(dailySpendVelocity)}/day
           </span>
         </div>
 
         <div className="p-3 rounded-xl bg-[#1B2130]/80 border border-[#263045]">
-          <span className="text-[10px] text-[#A5ADBE] block uppercase font-bold">Zero-Cash Crash Date</span>
+          <span className="text-xs text-[#A5ADBE] block uppercase font-bold">Zero-Cash Crash Date</span>
           <div className="flex items-center gap-1.5">
             {willDepleteEarly ? (
               <span className="text-base font-mono font-bold text-[#FF5C5C] flex items-center gap-1">

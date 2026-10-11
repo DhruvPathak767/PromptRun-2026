@@ -53,12 +53,13 @@ export const DepositModal: React.FC<DepositModalProps> = ({
               min="1"
               max={cashBalance}
               required
+              autoComplete="off"
               value={depositAmount}
               onChange={(e) => setDepositAmount(e.target.value)}
               className="w-full pl-7 pr-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs font-mono text-[#F5F7FA] focus:outline-none focus:border-[#C8FF4D]"
             />
           </div>
-          <span className="text-[11px] text-[#6B778C] mt-1 block">
+          <span className="text-xs text-[#A5ADBE] mt-1 block">
             Max available liquid cash: {formatRupees(cashBalance)}
           </span>
         </div>

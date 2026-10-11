@@ -1,94 +1,111 @@
 # 🌌 RupeeFlow — Make Every Rupee Count
 
+> 🌐 **Live Production Deployment:** [https://rupee-flow-124.netlify.app/](https://rupee-flow-124.netlify.app/)  
+> 🏆 **Frontend Arena Track:** *Broke But Functional — Survive the Month* (₹10,000 / 30-Day Budget Challenge)  
+> 📦 **GitHub Repository:** [https://github.com/DhruvPathak767/PromptRun-2026](https://github.com/DhruvPathak767/PromptRun-2026)
+
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_Mode_100%25-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vitest Passing](https://img.shields.io/badge/Tests-44%2F44_Passed-4EAA25?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Vitest Passing](https://img.shields.io/badge/Tests-57%2F57_Passed-4EAA25?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![ESLint & Oxlint](https://img.shields.io/badge/Linter-0_Errors_%7C_0_Warnings-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
-[![WCAG 2.2 AA Compliant](https://img.shields.io/badge/Accessibility-WCAG_2.2_AA_Compliant-9875FF)](./ACCESSIBILITY.md)
+[![WCAG 2.2 AA Verified](https://img.shields.io/badge/Accessibility-WCAG_2.2_AA_Verified-9875FF)](./ACCESSIBILITY.md)
+[![Bundle Entry](https://img.shields.io/badge/Entry_Bundle-108_KB_gzipped-00C781)](https://vitejs.dev/)
 [![Security Audited](https://img.shields.io/badge/Security-0_Vulnerabilities_%7C_CSP_Strict-00C781)](./SECURITY.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![CI Workflow](https://img.shields.io/badge/CI-GitHub_Actions_Passing-2088FF?logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
-
-> **Live Deployment:** [https://rupee-flow-124.netlify.app/](https://rupee-flow-124.netlify.app/)  
-> **Team:** `FrontendSmashers` | **Hackathon Track:** *Broke But Functional — Survive the Month*  
-> **Repository:** [https://github.com/DhruvPathak767/PromptRun-2026](https://github.com/DhruvPathak767/PromptRun-2026)
 
 ---
 
-## 🧭 Architectural & Governance Documentation
+## 🧭 Engineering & Architecture Documentation (`docs/`)
 
-- 🏗️ **[System Architecture & Data Flow (ARCHITECTURE.md)](./ARCHITECTURE.md)**: Layered design, domain math decoupling, state lifecycle, and bundle splitting topology.
-- 📐 **[Financial Engine Math Specification (ENGINE_SPEC.md)](./ENGINE_SPEC.md)**: Formal mathematical definitions, invariants, and What-If simulation delta formulas.
-- 🛡️ **[Security Policy & Threat Model (SECURITY.md)](./SECURITY.md)**: XSS tag-stripping, prototype-pollution defenses, and production Content-Security-Policy headers.
-- ♿ **[Accessibility & WCAG 2.2 AA Audit Matrix (ACCESSIBILITY.md)](./ACCESSIBILITY.md)**: Focus trap implementation, ARIA live announcements, and keyboard shortcuts map.
-- 📝 **[Changelog (CHANGELOG.md)](./CHANGELOG.md)**: Structured release history following Keep a Changelog.
-- 🤝 **[Contributing Guidelines (CONTRIBUTING.md)](./CONTRIBUTING.md)**: Engineering standards and automated CI checklist.
-- 📜 **[Code of Conduct (CODE_OF_CONDUCT.md)](./CODE_OF_CONDUCT.md)**: Contributor Covenant v2.1.
-- 📄 **[MIT License (LICENSE)](./LICENSE)**: Permissive open-source licensing.
+- 📐 **[Financial Engine Math Specification (docs/ENGINE.md)](./docs/ENGINE.md)**: Formal mathematical definitions, invariants, Chaos Mode resilience scoring ($0-100$), and simulation formulas.
+- 🏗️ **[State Machine & Lifecycle (docs/STATE.md)](./docs/STATE.md)**: Unidirectional immutable state flow, action creators, LocalStorage schema v1, and fallback hydration.
+- ⚖️ **[Architecture Decision Records (docs/DECISIONS.md)](./docs/DECISIONS.md)**: Formal ADR log covering Pure Deterministic Engine, Zero Preload Chunking, On-Demand 3D, and WCAG AA contrast tokens.
+- 📝 **[Changelog (CHANGELOG.md)](./CHANGELOG.md)**: SemVer release log tracking all versioned updates.
+- 🛡️ **[Security Policy (SECURITY.md)](./SECURITY.md)**: XSS tag-stripping, prototype-pollution defenses, and production Content-Security-Policy headers.
+- ♿ **[Accessibility Audit (ACCESSIBILITY.md)](./ACCESSIBILITY.md)**: WCAG 2.2 AA token audit, keyboard shortcut map, and form linking.
 
 ---
 
 ## 🚀 Product Overview
 
-**RupeeFlow** is a production-grade personal finance command center designed for Gen Z managing a limited ₹10,000 budget over 30 days. Rather than acting as a static expense tracker, RupeeFlow transforms financial survival into a transparent, gamified decision-making system.
+**RupeeFlow** is a modern personal finance decision simulator built for Gen Z university students and young professionals managing a limited **₹10,000 budget over 30 days**.
 
-Young adults face recurring commitments, sudden social temptations, and unpredictable cash cliffs. RupeeFlow provides immediate mathematical clarity, distinguishing illusory cash from **safe discretionary funds**, and delivers actionable tools to survive the month with positive savings.
+Unlike static expense loggers that simply record past regrets, RupeeFlow models the **interconnected consequences** of financial decisions before they are committed:
+- Distinguishes deceptive liquid cash from **safe discretionary living funds**.
+- Dynamically recalculates **safe daily spending allowances** across remaining cycle days.
+- Forecasts the exact **Deficit Crash Day** when zero-cash will occur under current spending velocities.
+- Provides immediate automated recovery mechanisms through **Broke Mode** and **Chaos Mode**.
 
 ---
 
-## ✨ Signature Gen Z Innovations
+## ✨ Signature Innovations
 
-### 1. 🚨 "Broke Mode" Auto-Triage & 1-Click Bailout Engine
-- **Algorithmic Liquidity Rescue**: When discretionary cash drops below safety thresholds (< ₹1,000), Broke Mode activates.
+### 1. 💥 Chaos Mode Financial Shock Generator & Resilience Engine
+- **Real-Life Gen Z Emergencies**: Injects real-world financial surprises into the simulation (e.g., *Laptop Liquid Spill Repair* ₹1,450, *Phone Screen Shatter* ₹1,950, *Bike Tyre Burst* ₹520, *Emergency Dental Care* ₹980).
+- **Algorithmic Resilience Score (0–100)**: Evaluates liquid buffer capacity ($40\%$), discretionary buffer surplus ($30\%$), and daily allowance sustainability ($30\%$). Classifies financial posture into *Antifragile*, *Resilient*, *Vulnerable*, or *Deficit Risk*.
+- **1-Click Absorption**: Integrates shocks directly into the 30-day ledger and updates cross-screen consequences.
+
+### 2. ⚡ Interconnected Consequence Live Ripple Tracker
+- A persistent cross-screen indicator displaying the exact ripple effect of every financial decision.
+- Translates additions, subscription changes, and emergency shocks into immediate daily allowance shifts and crash date forecasts across all views.
+
+### 3. 🚨 "Broke Mode" Auto-Triage & 1-Click Bailout
+- **Automated Liquidity Rescue**: Triggers when available discretionary funds drop below critical thresholds.
 - **3-Step Prioritized Triage**:
   1. *Freeze Non-Essential Subscriptions* (Spotify, Netflix).
-  2. *Ration Daily Allowance* (calculates emergency daily allowance cuts across remaining cycle days).
+  2. *Ration Daily Allowance* (calculates minimum sustainable emergency spending per day).
   3. *Goal Vault Micro-Shield* (safely unlocks emergency allocations without defaulting on core bills).
-- **1-Click Execution**: Instantly updates state, saves buffer, and plays milestone feedback.
+- **1-Tap Execution**: Dispatches atomic state updates and plays celebratory fanfare.
 
-### 2. ⏩ 30-Day Time-Travel Engine & Zero-Cash Forecast
-- **Interactive Fast-Forward Scrubber**: Scrub or auto-play through days 1–30 to simulate cash depletion in real time.
-- **Deficit Crash Date Predictor**: Dynamically forecasts the exact calendar day user will run out of money based on current spending velocity.
+### 4. ⏩ 30-Day Time-Travel Engine & Fast-Forward Scrubber
+- **Interactive Scrubber & Auto-Play**: Fast-forward through Days 1–30 to simulate cash depletion and trajectory in real time.
+- **Deficit Crash Date Predictor**: Pinpoints the exact calendar day when liquid funds reach ₹0.
 
-### 3. ⚡ Impulse Buy Reality Checker & 24h Cool-Down Chamber
-- **Tapri Chai & Campus Meal Index**: Translates any impulse craving (e.g., ₹799 Zara hoodie or Swiggy order) into tangible units: **40 cups of Tapri Chai ☕** or **6.7 Campus Meals 🍱**.
-- **Allowance Destruction Calculator**: Shows how many days of daily allowance are burned.
-- **24-Hour Cool-Down Chamber**: Locks impulse cravings into local storage (87% urge decay psychology).
+### 5. ⚡ Impulse Buy Reality Checker & 24h Cool-Down Chamber
+- **Tapri Chai & Campus Meal Equivalence**: Translates impulse cravings into tangible daily living units: **40 cups of Tapri Chai ☕** or **6.7 Campus Meals 🍱**.
+- **Allowance Destruction Metric**: Visualizes how many days of future spending capacity the purchase burns.
+- **24-Hour Cool-Down Vault**: Places impulse items in temporary isolation to leverage psychological urge decay.
 
-### 4. 🔥 "Survive the Month" Challenge & Streak Gamification
-- **Deterministic Survival Probability**: Real-time score (15%–99%) forecasting likelihood of reaching Day 30 without deficit.
-- **30-Day Cycle Streak**: Consecutive days without budget exhaustion with particle confetti animations.
-- **Achievement Badges**: *Discretionary Discipline*, *Zen Cash Buffer*, *Subscription Auditor*, *Vault Builder*.
+### 6. 🔥 "Survive the Month" Gamification & Survival Streaks
+- **Survival Probability Forecast**: Real-time score (15%–99%) forecasting likelihood of reaching Day 30 without deficit.
+- **Cycle Milestones**: Tracks consecutive solvent cycle days with dynamic on-demand confetti animations.
 
-### 5. ✨ 30-Day Money Vibe Card (Spotify-Wrapped Style)
+### 7. ✨ 30-Day Money Vibe Card (Spotify-Wrapped Style)
 - Generates a personalized Gen Z financial archetype (*The Chai-Powered Strategist ☕*, *The Vault Builder 🎯*, *The High-Octane Explorer ⚡*).
 - 1-click clipboard sharing for social media.
 
-### 6. 🔊 Pure Web Audio Haptic & Synthesizer Feedback
-- Zero-dependency audio feedback using browser `AudioContext`: positive transaction chimes, deficit alert hums, and celebration fanfares with an accessible global mute toggle.
-
-### 7. ⌨️ Accessible Keyboard Navigation & Shortcuts Cheatsheet
-- Power-user keyboard bindings (`Alt+N` Add Expense, `Alt+I` Impulse Buster, `Alt+B` Broke Mode, `Alt+S` Simulator) with global cheatsheet dialog via `?`.
+### 8. 🔊 Zero-Asset Web Audio API Synthesizer
+- Zero-dependency audio feedback generated in real time using native `AudioContext` (transaction chimes, deficit warning hums, milestone fanfares) with an accessible global mute toggle.
 
 ---
 
-## 🛠️ Technology Stack & Architecture
+## ⚡ Performance Optimization & Architecture
 
-- **Framework**: React 19 + TypeScript (Strict Mode with zero `any`)
-- **Build Tool**: Vite 8 with Rollup manual route chunking
-- **Styling**: Tailwind CSS v4 + Vanilla CSS Design System
-- **Icons**: Lucide React
-- **Visuals**: Three.js & React Three Fiber (deferred loading behind on-demand toggle)
-- **Charts**: Recharts with screen-reader table fallback toggle
-- **Quality**: ESLint 9, Oxlint, Vitest, JSDOM
+- **Ultra-Lightweight Entry Payload**: Home entry bundle starts at **~108 KB gzipped** (down from >215 KB gzipped).
+- **Zero Preload Vendor Chunking**: Vite/Rollup config isolates `vendor-react`. Recharts (`SpendingChart`) and Three.js (`FinanceScene`) are dynamic on-demand chunks with **zero `<link rel="modulepreload">` tags** in `dist/index.html`.
+- **On-Demand 3D with 2.5D Fallback**: Initial hero renders an accessible CSS 2.5D visualizer; Three.js initializes only when user toggles the interactive orbit.
+- **Pure Financial Selectors (`src/finance/selectors.ts`)**: 15 pure selector functions enforce the **UI $\rightarrow$ Engine** unidirectional boundary with zero financial reductions or rounding in UI components.
+- **Streamlined Typography**: Google Fonts subset with `display=swap` and DNS prefetch.
+- **PWA Ready**: Complete `/manifest.json`, `/robots.txt`, `/sitemap.xml`, and `/og-image.svg`.
+
+---
+
+## ♿ Accessibility Compliance (WCAG 2.2 Level AA)
+
+- **Certified Contrast Tokens**: All secondary text updated to `#A5ADBE` (>5.5:1 contrast against dark card and page backgrounds, exceeding 4.5:1 AA requirement).
+- **Zero Sub-12px Text**: 100% of micro-copy standardized to minimum `text-xs` (12px).
+- **Accessible Touch Targets**: Minimum 36px–44px hitboxes on all interactive buttons and action icons.
+- **Semantic Landmark Structure**: Semantic `<header>`, `<main>`, `<section aria-labelledby="...">`, and `<footer>`.
+- **Form Error Linking**: Form errors programmatically linked to inputs via `aria-describedby` and `aria-invalid`.
+- **Keyboard Shortcuts**: Global modal bindings (`?`, `Alt+N`, `Alt+I`, `Alt+B`, `Alt+C`, `Alt+V`).
 
 ---
 
 ## 🧪 Local Setup & Verification
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/dhruvpathak767/promptrun-2026.git
-cd promptrun-2026
+# 1. Clone repository
+git clone https://github.com/DhruvPathak767/PromptRun-2026.git
+cd PromptRun-2026
 
 # 2. Install dependencies
 npm install
@@ -96,20 +113,20 @@ npm install
 # 3. Run development server
 npm run dev
 
-# 4. Run automated test suite (44/44 tests)
+# 4. Run automated test suite (57/57 tests passing across 10 test suites)
 npm run test
 
 # 5. Run linter (0 errors, 0 warnings)
 npm run lint
 
-# 6. Strict typecheck
+# 6. Run strict TypeScript check
 npm run typecheck
 
-# 7. Production build
+# 7. Build production bundle
 npm run build
 ```
 
 ---
 
 ## 📜 License
-Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for full details.
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.

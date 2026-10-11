@@ -6,6 +6,7 @@ import { ImpulseBusterModal } from '../components/innovation/ImpulseBusterModal'
 import { SurvivalStreakBadge } from '../components/innovation/SurvivalStreakBadge'
 import { MoneyVibeCardModal } from '../components/innovation/MoneyVibeCardModal'
 import { BrokeModeModal } from '../components/innovation/BrokeModeModal'
+import { ChaosModeModal } from '../components/innovation/ChaosModeModal'
 import { TimeTravelScrubber } from '../components/innovation/TimeTravelScrubber'
 import { KeyboardShortcutsModal } from '../components/innovation/KeyboardShortcutsModal'
 
@@ -89,5 +90,20 @@ describe('Gen Z Innovation & Creativity Features', () => {
     expect(screen.getByText(/Keyboard Navigation Shortcuts/i)).toBeInTheDocument()
     expect(screen.getByText(/Open Add Expense Modal/i)).toBeInTheDocument()
     expect(screen.getByText(/Alt \+ N/i)).toBeInTheDocument()
+  })
+
+  it('ChaosModeModal renders shock scenarios and resilience score calculation', () => {
+    const handleClose = vi.fn()
+
+    render(
+      <FinanceProvider>
+        <ChaosModeModal isOpen={true} onClose={handleClose} />
+      </FinanceProvider>
+    )
+
+    expect(screen.getByText(/Chaos Mode — Financial Shock Generator/i)).toBeInTheDocument()
+    expect(screen.getByText(/Financial Resilience Engine/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/Laptop Liquid Spill Keyboard Repair/i).length).toBeGreaterThan(0)
+    expect(screen.getByRole('button', { name: /Absorb Shock/i })).toBeInTheDocument()
   })
 })

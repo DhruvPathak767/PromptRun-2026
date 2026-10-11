@@ -1,6 +1,6 @@
 import React, { useRef, Component, type ReactNode } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import type { Group, Mesh } from 'three'
 import { SceneFallback } from './SceneFallback'
 
 // Error boundary to catch WebGL context creation errors
@@ -47,11 +47,11 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 }
 
 const CoinAndRings: React.FC = () => {
-  const coinGroupRef = useRef<THREE.Group>(null)
-  const ringRef = useRef<THREE.Mesh>(null)
-  const orb1Ref = useRef<THREE.Mesh>(null)
-  const orb2Ref = useRef<THREE.Mesh>(null)
-  const orb3Ref = useRef<THREE.Mesh>(null)
+  const coinGroupRef = useRef<Group>(null)
+  const ringRef = useRef<Mesh>(null)
+  const orb1Ref = useRef<Mesh>(null)
+  const orb2Ref = useRef<Mesh>(null)
+  const orb3Ref = useRef<Mesh>(null)
 
   useFrame((state, delta) => {
     // Gentle rotation of the central coin group
@@ -253,7 +253,7 @@ export const FinanceScene: React.FC<FinanceSceneProps> = ({
 
         {/* Overlay Overlay Info Overlay */}
         <div className="absolute top-4 left-4 pointer-events-none flex flex-col gap-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-[#A5ADBE] font-bold">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#A5ADBE] font-bold">
             RupeeFlow 3D Core
           </span>
           <span className="text-xs font-semibold text-[#F5F7FA]">

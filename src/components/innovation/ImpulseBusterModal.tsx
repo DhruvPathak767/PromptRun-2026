@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Modal } from '../common/Modal'
 import { useFinance } from '../../state/useFinance'
 import { formatRupees } from '../../finance/financeEngine'
+import { selectChaiEquivalence } from '../../finance/selectors'
 
 interface ImpulseBusterModalProps {
   isOpen: boolean
@@ -36,8 +37,8 @@ export const ImpulseBusterModal: React.FC<ImpulseBusterModalProps> = ({ isOpen, 
 
   const price = Math.max(0, parseFloat(itemPrice) || 0)
 
-  // Gen Z Conversions
-  const chaiCount = Math.round(price / 20)
+  // Gen Z Conversions using pure selector
+  const chaiCount = selectChaiEquivalence(price)
   const mealsCount = (price / 120).toFixed(1)
   const daysBurned = metrics.safeDailyAllowance > 0
     ? (price / metrics.safeDailyAllowance).toFixed(1)
@@ -131,7 +132,7 @@ export const ImpulseBusterModal: React.FC<ImpulseBusterModalProps> = ({ isOpen, 
             <span className="text-xl font-bold font-mono text-[#F5F7FA] block">
               {chaiCount}
             </span>
-            <span className="text-[10px] text-[#A5ADBE] block mt-0.5">Cups of Tapri Chai</span>
+            <span className="text-xs text-[#A5ADBE] block mt-0.5">Cups of Tapri Chai</span>
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#1B2130] border border-[#263045] text-center">
@@ -141,7 +142,7 @@ export const ImpulseBusterModal: React.FC<ImpulseBusterModalProps> = ({ isOpen, 
             <span className="text-xl font-bold font-mono text-[#F5F7FA] block">
               {mealsCount}
             </span>
-            <span className="text-[10px] text-[#A5ADBE] block mt-0.5">Campus Thali Meals</span>
+            <span className="text-xs text-[#A5ADBE] block mt-0.5">Campus Thali Meals</span>
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#1B2130] border border-[#263045] text-center">
@@ -151,7 +152,7 @@ export const ImpulseBusterModal: React.FC<ImpulseBusterModalProps> = ({ isOpen, 
             <span className="text-xl font-bold font-mono text-[#FF5C5C] block">
               {daysBurned}d
             </span>
-            <span className="text-[10px] text-[#A5ADBE] block mt-0.5">Daily Allowance Burned</span>
+            <span className="text-xs text-[#A5ADBE] block mt-0.5">Daily Allowance Burned</span>
           </div>
         </div>
 
@@ -169,7 +170,7 @@ export const ImpulseBusterModal: React.FC<ImpulseBusterModalProps> = ({ isOpen, 
               {formatRupees(newDailyAllowance)}/day
             </span>
           </div>
-          <div className="pt-2 border-t border-[#263045] flex items-center gap-2 text-[11px] text-[#A5ADBE]">
+          <div className="pt-2 border-t border-[#263045] flex items-center gap-2 text-xs text-[#A5ADBE]">
             <Clock className="w-4 h-4 text-[#63E5F4] shrink-0" />
             <span>
               This one impulse burns{' '}

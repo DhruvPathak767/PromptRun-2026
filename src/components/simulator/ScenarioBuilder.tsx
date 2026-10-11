@@ -47,7 +47,7 @@ export const ScenarioBuilder: React.FC<ScenarioBuilderProps> = ({
         <h3 className="text-sm font-bold font-display text-[#F5F7FA] flex items-center gap-2">
           <Sliders className="w-4 h-4 text-[#C8FF4D]" /> Interactive Scenario Editor
         </h3>
-        <span className="text-[10px] text-[#A5ADBE] font-mono">Live Preview</span>
+        <span className="text-xs text-[#A5ADBE] font-mono">Live Preview</span>
       </div>
 
       {/* Scenario Type Selector */}
@@ -104,7 +104,7 @@ export const ScenarioBuilder: React.FC<ScenarioBuilderProps> = ({
             <label htmlFor="sim-amount" className="text-xs font-medium text-[#A5ADBE]">
               Hypothetical Amount (₹)
             </label>
-            <span className="text-[11px] font-mono text-[#C8FF4D]">
+            <span className="text-xs font-mono text-[#C8FF4D]">
               {formatRupees(parsedAmount)}
             </span>
           </div>
@@ -128,7 +128,7 @@ export const ScenarioBuilder: React.FC<ScenarioBuilderProps> = ({
                 key={val}
                 type="button"
                 onClick={() => setAmount(val.toString())}
-                className="flex-1 py-1 text-[10px] font-mono rounded-lg bg-[#1B2130] hover:bg-[#263045] text-[#A5ADBE] hover:text-[#F5F7FA] border border-[#263045]"
+                className="flex-1 py-1.5 min-h-[36px] text-xs font-mono rounded-lg bg-[#1B2130] hover:bg-[#263045] text-[#A5ADBE] hover:text-[#F5F7FA] border border-[#263045]"
               >
                 +{val}
               </button>

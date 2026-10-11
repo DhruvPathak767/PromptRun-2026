@@ -94,7 +94,7 @@ export const SimulatorPage: React.FC = () => {
               <h2 className="text-xl font-bold font-display text-[#F5F7FA]">
                 What-If Decision Lab
               </h2>
-              <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-[#63E5F4]/15 text-[#63E5F4] border border-[#63E5F4]/30">
+              <span className="text-xs font-bold uppercase px-2 py-0.5 rounded-full bg-[#63E5F4]/15 text-[#63E5F4] border border-[#63E5F4]/30">
                 Non-Destructive Sandbox
               </span>
             </div>

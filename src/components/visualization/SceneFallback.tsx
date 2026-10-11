@@ -35,12 +35,12 @@ export const SceneFallback: React.FC<SceneFallbackProps> = ({
           </div>
 
           {/* Floating Pill Badges */}
-          <div className="absolute -top-3 -right-6 px-3 py-1 rounded-full bg-[#141822]/90 border border-[#C8FF4D]/40 backdrop-blur-md shadow-lg flex items-center gap-1.5 text-[11px] font-mono font-bold text-[#C8FF4D]">
+          <div className="absolute -top-3 -right-6 px-3 py-1 rounded-full bg-[#141822]/90 border border-[#C8FF4D]/40 backdrop-blur-md shadow-lg flex items-center gap-1.5 text-xs font-mono font-bold text-[#C8FF4D]">
             <Sparkles className="w-3 h-3" />
             <span>₹{Math.round(cashBalance).toLocaleString('en-IN')} Liquid</span>
           </div>
 
-          <div className="absolute -bottom-3 -left-6 px-3 py-1 rounded-full bg-[#141822]/90 border border-[#63E5F4]/40 backdrop-blur-md shadow-lg flex items-center gap-1.5 text-[11px] font-mono font-bold text-[#63E5F4]">
+          <div className="absolute -bottom-3 -left-6 px-3 py-1 rounded-full bg-[#141822]/90 border border-[#63E5F4]/40 backdrop-blur-md shadow-lg flex items-center gap-1.5 text-xs font-mono font-bold text-[#63E5F4]">
             <ShieldCheck className="w-3 h-3" />
             <span>₹{Math.round(safeDailyAllowance)}/day Safe</span>
           </div>

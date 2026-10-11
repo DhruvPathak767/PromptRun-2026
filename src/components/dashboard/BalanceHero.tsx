@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { useFinance } from '../../state/useFinance'
 import { formatRupees } from '../../finance/financeEngine'
+import { selectCommittedPercentage } from '../../finance/selectors'
 import { SceneFallback } from '../visualization/SceneFallback'
 
 // Lazy-load the heavy 3D WebGL scene to optimize initial bundle and fast rendering
@@ -49,7 +50,7 @@ export const BalanceHero: React.FC = () => {
           <button
             type="button"
             onClick={() => setIs3DActive((prev) => !prev)}
-            className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-[#141822]/90 border border-[#263045] text-[#A5ADBE] hover:text-[#C8FF4D] hover:border-[#C8FF4D]/40 backdrop-blur-md shadow-md transition-all flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#C8FF4D]"
+            className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl text-xs font-semibold bg-[#141822]/90 border border-[#263045] text-[#A5ADBE] hover:text-[#C8FF4D] hover:border-[#C8FF4D]/40 backdrop-blur-md shadow-md transition-all flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#C8FF4D]"
             title={is3DActive ? "Switch to high-efficiency 2D view" : "Launch interactive Three.js 3D orbit"}
             aria-label={is3DActive ? "Disable 3D Canvas" : "Enable 3D Canvas"}
           >
@@ -109,7 +110,7 @@ export const BalanceHero: React.FC = () => {
                   / {formatRupees(metrics.openingBudget)}
                 </span>
               </div>
-              <p className="text-[11px] text-[#A5ADBE] mt-1">
+              <p className="text-xs text-[#A5ADBE] mt-1">
                 Liquid funds remaining from starting ₹10k budget.
               </p>
             </div>
@@ -127,7 +128,7 @@ export const BalanceHero: React.FC = () => {
                   <ShieldCheck className="w-3.5 h-3.5" /> Truly Safe to Spend
                 </span>
                 {isDiscretionaryNegative && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#FF5C5C] text-white">
+                  <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-[#FF5C5C] text-white">
                     DEFICIT
                   </span>
                 )}
@@ -137,7 +138,7 @@ export const BalanceHero: React.FC = () => {
                   {formatRupees(metrics.availableDiscretionaryFunds)}
                 </span>
               </div>
-              <p className="text-[11px] text-[#A5ADBE] mt-1">
+              <p className="text-xs text-[#A5ADBE] mt-1">
                 {isDiscretionaryNegative
                   ? 'Shortfall: Cash is insufficient for upcoming obligations!'
                   : 'After subtracting upcoming bills & planned savings.'}
@@ -150,7 +151,12 @@ export const BalanceHero: React.FC = () => {
             <div className="flex items-center justify-between text-xs text-[#A5ADBE]">
               <span>Cycle Budget Consumption</span>
               <span className="font-mono">
-                {Math.round(((metrics.totalExpenses + metrics.upcomingCommitmentsTotal + metrics.outstandingPlannedSavingsTotal) / metrics.openingBudget) * 100)}% committed
+                {selectCommittedPercentage(
+                  metrics.totalExpenses,
+                  metrics.upcomingCommitmentsTotal,
+                  metrics.outstandingPlannedSavingsTotal,
+                  metrics.openingBudget
+                )}% committed
               </span>
             </div>
 
@@ -191,7 +197,7 @@ export const BalanceHero: React.FC = () => {
             </div>
 
             {/* Legend */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-[11px] text-[#A5ADBE]">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-xs text-[#A5ADBE]">
               <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#FF5C5C]" />
                 Spent: {formatRupees(metrics.totalExpenses)}
@@ -223,11 +229,11 @@ export const BalanceHero: React.FC = () => {
                 <span className="text-xs font-bold text-[#F5F7FA]">
                   Safe Daily Spending Allowance
                 </span>
-                <span className="text-[10px] text-[#C8FF4D] font-mono px-1.5 py-0.2 rounded bg-[#C8FF4D]/10">
+                <span className="text-xs text-[#C8FF4D] font-mono px-1.5 py-0.5 rounded bg-[#C8FF4D]/10">
                   Day {state.currentDay}..30
                 </span>
               </div>
-              <p className="text-[11px] text-[#A5ADBE]">
+              <p className="text-xs text-[#A5ADBE]">
                 {metrics.safeDailyAllowance > 0
                   ? `You can safely spend ${formatRupees(metrics.safeDailyAllowance)} today without jeopardizing upcoming commitments.`
                   : 'Allowance is ₹0 due to budget deficit. Freeze variable spending.'}
@@ -239,7 +245,7 @@ export const BalanceHero: React.FC = () => {
             <span className="text-xl font-black font-mono text-[#C8FF4D]">
               {formatRupees(metrics.safeDailyAllowance)}
             </span>
-            <span className="text-[10px] text-[#A5ADBE] block">per day</span>
+            <span className="text-xs text-[#A5ADBE] block">per day</span>
           </div>
         </div>
       </div>

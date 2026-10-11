@@ -36,13 +36,13 @@ export const SubscriptionCardsList: React.FC<SubscriptionCardsListProps> = ({
                   <h3 className="text-base font-bold font-display text-[#F5F7FA]">
                     {sub.name}
                   </h3>
-                  <span className="text-[11px] text-[#A5ADBE] block mt-0.5">
+                  <span className="text-xs text-[#A5ADBE] block mt-0.5">
                     {sub.tier || 'Monthly Subscription'} • {sub.category}
                   </span>
                 </div>
 
                 <span
-                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                     sub.active
                       ? 'bg-[#C8FF4D]/15 text-[#C8FF4D]'
                       : 'bg-[#FF5C5C]/15 text-[#FF5C5C]'
@@ -65,7 +65,7 @@ export const SubscriptionCardsList: React.FC<SubscriptionCardsListProps> = ({
                 </span>
               </div>
 
-              <p className="text-[11px] text-[#A5ADBE] mt-3">
+              <p className="text-xs text-[#A5ADBE] mt-3">
                 {willChargeThisCycle
                   ? `Scheduled to charge on Day ${sub.billingDay} (reserves ₹${sub.price} from cash).`
                   : sub.active
@@ -89,7 +89,7 @@ export const SubscriptionCardsList: React.FC<SubscriptionCardsListProps> = ({
 
               <button
                 onClick={() => onDelete(sub.id)}
-                className="p-1.5 rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] hover:bg-[#FF5C5C]/10 transition-colors"
+                className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] hover:bg-[#FF5C5C]/10 transition-colors"
                 title="Delete subscription"
                 aria-label={`Delete ${sub.name}`}
               >

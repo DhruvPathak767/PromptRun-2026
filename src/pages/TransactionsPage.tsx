@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useFinance } from '../state/useFinance'
 import { formatRupees } from '../finance/financeEngine'
+import { selectTransactionsTotal } from '../finance/selectors'
 import {
   EXPENSE_CATEGORIES,
   type ExpenseCategory,
@@ -80,14 +81,14 @@ export const TransactionsPage: React.FC = () => {
     })
   }, [state.transactions, searchQuery, selectedCategory, selectedType])
 
-  const totalSpentFiltered = filteredTransactions
-    .filter((tx) => tx.type === 'expense' || tx.type === 'bill_payment')
-    .reduce((sum, tx) => sum + tx.amount, 0)
+  const totalSpentFiltered = selectTransactionsTotal(
+    filteredTransactions.filter((tx) => tx.type === 'expense' || tx.type === 'bill_payment')
+  )
 
   return (
     <div className="space-y-6">
       {/* Search, Filter, and Action Bar */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <section aria-label="Transaction filters and actions" className="p-4 sm:p-5 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Search Input */}
         <div className="relative flex-1">
           <Search className="w-4 h-4 text-[#A5ADBE] absolute left-3.5 top-3" />
@@ -97,7 +98,7 @@ export const TransactionsPage: React.FC = () => {
             placeholder="Search by description, merchant, or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#6B778C] focus:outline-none focus:border-[#C8FF4D]"
+            className="w-full pl-9 pr-4 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] placeholder-[#A5ADBE] focus:outline-none focus:border-[#C8FF4D]"
           />
         </div>
 
@@ -138,7 +139,7 @@ export const TransactionsPage: React.FC = () => {
             <span>New Transaction</span>
           </button>
         </div>
-      </div>
+      </section>
 
       {/* Summary Chips */}
       <div className="flex items-center justify-between text-xs text-[#A5ADBE] px-1">
@@ -152,10 +153,13 @@ export const TransactionsPage: React.FC = () => {
       </div>
 
       {/* Transactions Table / List */}
-      <div className="p-4 sm:p-6 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl overflow-hidden">
+      <section aria-labelledby="transactions-records-heading" className="p-4 sm:p-6 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl overflow-hidden">
+        <h2 id="transactions-records-heading" className="sr-only">
+          Transaction History
+        </h2>
         {filteredTransactions.length === 0 ? (
           <div className="py-12 text-center text-xs text-[#A5ADBE]">
-            <Receipt className="w-8 h-8 text-[#6B778C] mx-auto mb-2" />
+            <Receipt className="w-8 h-8 text-[#A5ADBE] mx-auto mb-2" />
             No transactions match the selected filters.
           </div>
         ) : (
@@ -190,19 +194,19 @@ export const TransactionsPage: React.FC = () => {
                         {tx.description}
                       </span>
                       {tx.isFixed && (
-                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#1C2433] text-[#A5ADBE] border border-[#263045]">
+                        <span className="text-xs uppercase font-bold px-1.5 py-0.5 rounded bg-[#1C2433] text-[#A5ADBE] border border-[#263045]">
                           Fixed
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] text-[#A5ADBE] mt-0.5">
+                    <div className="flex items-center gap-2 text-xs text-[#A5ADBE] mt-0.5">
                       <span>{tx.date}</span>
                       <span>•</span>
                       <span>{tx.category}</span>
                       {tx.note && (
                         <>
                           <span>•</span>
-                          <span className="truncate italic text-[#6B778C]">{tx.note}</span>
+                          <span className="truncate italic text-[#A5ADBE]">{tx.note}</span>
                         </>
                       )}
                     </div>
@@ -223,7 +227,7 @@ export const TransactionsPage: React.FC = () => {
                       {tx.type === 'income' ? '+' : tx.type === 'savings_transfer' ? '' : '−'}
                       {formatRupees(tx.amount)}
                     </span>
-                    <span className="text-[10px] text-[#6B778C] capitalize">
+                    <span className="text-xs text-[#A5ADBE] capitalize">
                       {tx.type.replace('_', ' ')}
                     </span>
                   </div>
@@ -231,7 +235,7 @@ export const TransactionsPage: React.FC = () => {
                   <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => handleStartEdit(tx)}
-                      className="p-1.5 rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1C2433] transition-colors"
+                      className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-[#1C2433] transition-colors"
                       title="Edit transaction"
                       aria-label={`Edit ${tx.description}`}
                     >
@@ -239,7 +243,7 @@ export const TransactionsPage: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setDeleteTargetId(tx.id)}
-                      className="p-1.5 rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] hover:bg-[#FF5C5C]/10 transition-colors"
+                      className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#A5ADBE] hover:text-[#FF5C5C] hover:bg-[#FF5C5C]/10 transition-colors"
                       title="Delete transaction"
                       aria-label={`Delete ${tx.description}`}
                     >
@@ -251,7 +255,7 @@ export const TransactionsPage: React.FC = () => {
             ))}
           </div>
         )}
-      </div>
+      </section>
 
       {/* Create Transaction Modal */}
       <TransactionFormModal
