@@ -24,9 +24,18 @@ export const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       previousFocus.current = document.activeElement as HTMLElement
-      // Focus modal container
-      modalRef.current?.focus()
       document.body.style.overflow = 'hidden'
+
+      // Focus first focusable element inside the modal container after mount
+      const focusableSelector =
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      const focusableElements = modalRef.current?.querySelectorAll<HTMLElement>(focusableSelector)
+
+      if (focusableElements && focusableElements.length > 0) {
+        focusableElements[0].focus()
+      } else {
+        modalRef.current?.focus()
+      }
     } else {
       document.body.style.overflow = 'unset'
       previousFocus.current?.focus()
@@ -37,12 +46,43 @@ export const Modal: React.FC<ModalProps> = ({
     }
   }, [isOpen])
 
+  // Focus trap & Escape key listener
   useEffect(() => {
+    if (!isOpen) return
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape') {
         onClose()
+        return
+      }
+
+      if (e.key === 'Tab') {
+        const focusableSelector =
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        const focusable = modalRef.current?.querySelectorAll<HTMLElement>(focusableSelector)
+
+        if (!focusable || focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === first || document.activeElement === modalRef.current) {
+            e.preventDefault()
+            last.focus()
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault()
+            first.focus()
+          }
+        }
       }
     }
+
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])

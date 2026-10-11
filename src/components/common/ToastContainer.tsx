@@ -8,13 +8,12 @@ export const ToastContainer: React.FC = () => {
   if (toasts.length === 0) return null
 
   return (
-    <div
+    <section
       className="fixed bottom-20 md:bottom-6 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"
-      role="region"
       aria-label="Notifications"
     >
       {toasts.map((toast: ToastMessage) => (
-        <div
+        <output
           key={toast.id}
           className={`pointer-events-auto flex items-start gap-3 p-3.5 rounded-xl border backdrop-blur-xl shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-2 ${
             toast.type === 'success'
@@ -25,7 +24,6 @@ export const ToastContainer: React.FC = () => {
               ? 'bg-[#141822]/95 border-[#FF5C5C]/30 text-[#F5F7FA]'
               : 'bg-[#141822]/95 border-[#63E5F4]/30 text-[#F5F7FA]'
           }`}
-          role="status"
           aria-live="polite"
         >
           <div className="shrink-0 mt-0.5">
@@ -45,8 +43,8 @@ export const ToastContainer: React.FC = () => {
           >
             <X className="w-4 h-4" />
           </button>
-        </div>
+        </output>
       ))}
-    </div>
+    </section>
   )
 }

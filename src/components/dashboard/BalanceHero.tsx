@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Wallet,
@@ -14,27 +14,48 @@ const FinanceScene = lazy(() => import('../visualization/FinanceScene'))
 
 export const BalanceHero: React.FC = () => {
   const { state, metrics } = useFinance()
+  const [canRender3D] = useState(() => {
+    if (typeof window === 'undefined') return false
+    const isDesktop = window.innerWidth >= 1024
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+    const hasWebGL = (() => {
+      try {
+        const canvas = document.createElement('canvas')
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
+      } catch {
+        return false
+      }
+    })()
+    return isDesktop && !prefersReducedMotion && hasWebGL
+  })
 
   const isDiscretionaryNegative = metrics.availableDiscretionaryFunds < 0
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-      {/* Left Col: 3D Visualization */}
+      {/* Left Col: 3D Visualization / Accessible Fallback */}
       <div className="lg:col-span-5 flex flex-col justify-between">
-        <Suspense
-          fallback={
-            <SceneFallback
+        {canRender3D ? (
+          <Suspense
+            fallback={
+              <SceneFallback
+                cashBalance={metrics.cashBalance}
+                safeDailyAllowance={metrics.safeDailyAllowance}
+              />
+            }
+          >
+            <FinanceScene
               cashBalance={metrics.cashBalance}
               safeDailyAllowance={metrics.safeDailyAllowance}
+              currentDay={state.currentDay}
             />
-          }
-        >
-          <FinanceScene
+          </Suspense>
+        ) : (
+          <SceneFallback
             cashBalance={metrics.cashBalance}
             safeDailyAllowance={metrics.safeDailyAllowance}
-            currentDay={state.currentDay}
           />
-        </Suspense>
+        )}
 
         {/* Quick Health Tag beneath 3D Scene */}
         <div className="mt-3 p-3 rounded-xl bg-[#141822] border border-[#263045] flex items-center justify-between">
@@ -218,7 +239,7 @@ export const BalanceHero: React.FC = () => {
             <span className="text-xl font-black font-mono text-[#C8FF4D]">
               {formatRupees(metrics.safeDailyAllowance)}
             </span>
-            <span className="text-[10px] text-[#A5ADBE] block">/ day</span>
+            <span className="text-[10px] text-[#A5ADBE] block">per day</span>
           </div>
         </div>
       </div>

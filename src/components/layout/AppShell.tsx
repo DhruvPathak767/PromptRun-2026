@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 import { MobileNavigation } from './MobileNavigation'
 import { PageHeader } from './PageHeader'
@@ -7,7 +7,7 @@ import { ToastContainer } from '../common/ToastContainer'
 import { TransactionFormModal } from '../finance/TransactionFormModal'
 import { Modal } from '../common/Modal'
 import { FlaskConical, PlusCircle } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { getRouteMetadata } from '../../routes/routeMeta'
 
 export const AppShell: React.FC = () => {
   const [isAddTxOpen, setIsAddTxOpen] = useState(false)
@@ -15,61 +15,25 @@ export const AppShell: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  // Dynamic page title based on path
-  const getHeaderInfo = () => {
-    switch (location.pathname) {
-      case '/':
-        return {
-          title: 'RupeeFlow Command Center',
-          subtitle: 'Your ₹10,000 30-day financial command center in motion.',
-        }
-      case '/transactions':
-        return {
-          title: 'Transaction Ledger',
-          subtitle: 'Search, filter, and review all 30-day expenses and cash inflows.',
-        }
-      case '/budget':
-        return {
-          title: '30-Day Budget Planner',
-          subtitle: 'Daily burn timeline, fixed vs variable obligations, and daily allowance pacing.',
-        }
-      case '/goals':
-        return {
-          title: 'Savings Goals',
-          subtitle: 'Build financial cushions and milestones without shrinking real savings.',
-        }
-      case '/subscriptions':
-        return {
-          title: 'Subscriptions & Commitments',
-          subtitle: 'Manage monthly recurring services and upcoming cycle obligations.',
-        }
-      case '/simulator':
-        return {
-          title: 'What-If Lab',
-          subtitle: 'Simulate financial decisions safely before committing them to your real budget.',
-        }
-      case '/insights':
-        return {
-          title: 'Financial Health & Insights',
-          subtitle: 'Explainable health scoring, spending risk alerts, and actionable recommendations.',
-        }
-      case '/settings':
-        return {
-          title: 'Settings & Demo Controls',
-          subtitle: 'Simulation day adjuster, local persistence info, and demo data reset.',
-        }
-      default:
-        return {
-          title: 'RupeeFlow',
-          subtitle: 'Make every rupee count.',
-        }
-    }
-  }
+  const meta = getRouteMetadata(location.pathname)
 
-  const { title, subtitle } = getHeaderInfo()
+  // Accessible route changes: update document title and shift focus
+  useEffect(() => {
+    document.title = meta.documentTitle
+
+    const mainElement = document.getElementById('main-content')
+    if (mainElement) {
+      mainElement.focus({ preventScroll: true })
+    }
+  }, [location.pathname, meta.documentTitle])
 
   return (
     <div className="min-h-screen bg-[#0B0D12] text-[#F5F7FA] flex flex-col lg:flex-row font-sans">
+      {/* Route Change Announcement for Screen Readers */}
+      <div aria-live="polite" className="sr-only">
+        Navigated to {meta.title}
+      </div>
+
       {/* WCAG 2.2 AA Skip Link for Keyboard Navigation */}
       <a
         href="#main-content"
@@ -84,12 +48,16 @@ export const AppShell: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 pb-20 lg:pb-8">
         <PageHeader
-          title={title}
-          subtitle={subtitle}
+          title={meta.title}
+          subtitle={meta.subtitle}
           onOpenAddExpense={() => setIsAddTxOpen(true)}
         />
 
-        <main id="main-content" tabIndex={-1} className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full focus:outline-none">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full focus:outline-none"
+        >
           <Outlet />
         </main>
       </div>

@@ -1,6 +1,7 @@
 /**
  * Security & Input Sanitization Utilities
  * Defends against XSS, prototype pollution, non-finite monetary values, and overflows.
+ * Note: Does NOT double-escape entities (like & to &amp;) so React safely escapes strings on render without double-encoding artifacts.
  */
 
 /**
@@ -8,21 +9,16 @@
  */
 export function sanitizeText(value: unknown, maxLength = 120): string {
   if (typeof value !== 'string') return ''
-  // Strip HTML / script tags
-  const stripped = value
+
+  // 1. Strip all HTML / script tags
+  // 2. Strip non-printable ASCII control characters (0x00-0x1F, 0x7F)
+  const cleaned = value
     .replace(/<[^>]*>?/gm, '')
-    .replace(/[<>'"&]/g, (char) => {
-      switch (char) {
-        case '<': return '&lt;'
-        case '>': return '&gt;'
-        case "'": return '&#39;'
-        case '"': return '&quot;'
-        case '&': return '&amp;'
-        default: return char
-      }
-    })
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\x00-\x1F\x7F]/g, '')
     .trim()
-  return stripped.slice(0, maxLength)
+
+  return cleaned.slice(0, maxLength)
 }
 
 /**

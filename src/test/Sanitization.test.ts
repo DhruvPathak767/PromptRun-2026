@@ -16,11 +16,17 @@ describe('Security & Data Sanitization Engine', () => {
       expect(sanitized).toContain('Campus Lunch')
     })
 
-    it('escapes dangerous HTML special characters when plain text is provided', () => {
-      const input = 'Buy & Sell Sneakers "AirJordan"'
+    it('preserves clean text without double-encoding entities so React renders cleanly', () => {
+      const input = 'Pizza & Chai with Study Group'
       const output = sanitizeText(input)
-      expect(output).toContain('&amp;')
-      expect(output).toContain('&quot;AirJordan&quot;')
+      expect(output).toBe('Pizza & Chai with Study Group')
+      expect(output).not.toContain('&amp;')
+    })
+
+    it('strips non-printable control characters', () => {
+      const input = 'Canteen Lunch\x00\x1F\x07'
+      const output = sanitizeText(input)
+      expect(output).toBe('Canteen Lunch')
     })
 
     it('enforces maximum length bounds', () => {

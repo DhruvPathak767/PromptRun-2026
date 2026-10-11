@@ -109,7 +109,10 @@ export const BudgetPage: React.FC = () => {
         </div>
 
         {/* 30 Day Interactive Matrix (5 rows of 6 or 6 rows of 5) */}
-        <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-10 gap-2 sm:gap-2.5 mt-5">
+        <section
+          aria-label="30-day budget calendar matrix"
+          className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-10 gap-2 sm:gap-2.5 mt-5"
+        >
           {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => {
             const isPast = day < state.currentDay
             const isToday = day === state.currentDay
@@ -173,7 +176,7 @@ export const BudgetPage: React.FC = () => {
               </button>
             )
           })}
-        </div>
+        </section>
       </div>
 
       {/* Selected Day Inspector & Category Allocations */}
@@ -271,6 +274,7 @@ export const BudgetPage: React.FC = () => {
             <div className="flex items-center gap-2 mt-2.5">
               <input
                 type="range"
+                aria-label="Simulated purchase amount"
                 min="100"
                 max="3000"
                 step="100"
@@ -311,7 +315,14 @@ export const BudgetPage: React.FC = () => {
                     <span className="font-bold text-[#F5F7FA]">{formatRupees(cat.amount)}</span>
                   </div>
                 </div>
-                <div className="w-full h-2 rounded-full bg-[#1B2130] overflow-hidden">
+                <div
+                  className="w-full h-2 rounded-full bg-[#1B2130] overflow-hidden"
+                  role="progressbar"
+                  aria-valuenow={cat.percentage}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`${cat.category} expense allocation`}
+                >
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{

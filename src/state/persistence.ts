@@ -59,10 +59,9 @@ export function loadPersistedState(): RupeeFlowState {
       return parsed
     }
 
-    console.warn('[RupeeFlow] Stored data failed schema validation. Falling back to default demo state.')
+    // Stored data failed schema validation; fallback to default demo state
     return INITIAL_DEMO_STATE
-  } catch (err) {
-    console.error('[RupeeFlow] Error parsing localStorage data:', err)
+  } catch {
     return INITIAL_DEMO_STATE
   }
 }
@@ -80,8 +79,8 @@ export function savePersistedState(state: RupeeFlowState): void {
       lastUpdated: new Date().toISOString(),
     })
     localStorage.setItem(STORAGE_KEY, payload)
-  } catch (err) {
-    console.error('[RupeeFlow] Failed to write state to localStorage:', err)
+  } catch {
+    // Fail silently in restricted storage environments
   }
 }
 
@@ -92,7 +91,7 @@ export function clearPersistedState(): void {
   if (typeof window === 'undefined' || !window.localStorage) return
   try {
     localStorage.removeItem(STORAGE_KEY)
-  } catch (err) {
-    console.error('[RupeeFlow] Failed to clear localStorage:', err)
+  } catch {
+    // Fail silently
   }
 }

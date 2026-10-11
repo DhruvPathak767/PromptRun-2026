@@ -23,8 +23,8 @@ export class WebGLErrorBoundary extends Component<ErrorBoundaryProps, ErrorBound
     return { hasError: true }
   }
 
-  componentDidCatch(error: Error) {
-    console.warn('[RupeeFlow] WebGL scene disabled or encountered error:', error)
+  componentDidCatch() {
+    // Graceful fallback to SceneFallback
   }
 
   render() {

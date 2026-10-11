@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { FinancialMetricsGrid } from '../components/dashboard/FinancialMetric'
-import { SpendingChart } from '../components/dashboard/SpendingChart'
 import { CommitmentsPreview } from '../components/dashboard/CommitmentsPreview'
 import { InsightsPreview } from '../components/dashboard/InsightsPreview'
 import { useFinance } from '../state/useFinance'
 import { formatRupees } from '../finance/financeEngine'
 import { ArrowRight, Receipt } from 'lucide-react'
+
+const SpendingChart = lazy(() =>
+  import('../components/dashboard/SpendingChart').then((m) => ({ default: m.SpendingChart }))
+)
 
 export const DashboardPage: React.FC = () => {
   const { state } = useFinance()
@@ -23,8 +26,18 @@ export const DashboardPage: React.FC = () => {
       {/* 2. Responsive Key Financial Metrics Grid */}
       <FinancialMetricsGrid />
 
-      {/* 3. Spending Trajectory Chart */}
-      <SpendingChart />
+      {/* 3. Spending Trajectory Chart (Asynchronously loaded to keep initial bundle ultra-light) */}
+      <Suspense
+        fallback={
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#141822] border border-[#263045] shadow-xl h-80 flex flex-col justify-between animate-pulse" aria-busy="true" aria-label="Loading spending trajectory">
+            <div className="h-6 w-48 bg-[#1B2130] rounded-lg" />
+            <div className="h-44 w-full bg-[#1B2130]/50 rounded-xl" />
+            <div className="h-4 w-64 bg-[#1B2130] rounded-lg" />
+          </div>
+        }
+      >
+        <SpendingChart />
+      </Suspense>
 
       {/* 4. Commitments and Contextual Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

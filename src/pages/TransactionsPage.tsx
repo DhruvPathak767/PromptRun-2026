@@ -93,6 +93,7 @@ export const TransactionsPage: React.FC = () => {
           <Search className="w-4 h-4 text-[#A5ADBE] absolute left-3.5 top-3" />
           <input
             type="text"
+            aria-label="Search transactions"
             placeholder="Search by description, merchant, or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -103,6 +104,7 @@ export const TransactionsPage: React.FC = () => {
         {/* Category & Type Dropdowns */}
         <div className="flex flex-wrap items-center gap-2.5">
           <select
+            aria-label="Filter by category"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] focus:outline-none focus:border-[#C8FF4D]"
@@ -116,6 +118,7 @@ export const TransactionsPage: React.FC = () => {
           </select>
 
           <select
+            aria-label="Filter by transaction type"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
             className="px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] focus:outline-none focus:border-[#C8FF4D]"
@@ -281,8 +284,9 @@ export const TransactionsPage: React.FC = () => {
       >
         <form onSubmit={handleSaveEdit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#A5ADBE] mb-1">Description</label>
+            <label htmlFor="edit-tx-desc" className="block text-xs font-medium text-[#A5ADBE] mb-1">Description</label>
             <input
+              id="edit-tx-desc"
               type="text"
               required
               value={editDesc}
@@ -293,8 +297,9 @@ export const TransactionsPage: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[#A5ADBE] mb-1">Amount (₹)</label>
+              <label htmlFor="edit-tx-amount" className="block text-xs font-medium text-[#A5ADBE] mb-1">Amount (₹)</label>
               <input
+                id="edit-tx-amount"
                 type="number"
                 required
                 min="1"
@@ -305,8 +310,9 @@ export const TransactionsPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-[#A5ADBE] mb-1">Cycle Day</label>
+              <label htmlFor="edit-tx-day" className="block text-xs font-medium text-[#A5ADBE] mb-1">Cycle Day</label>
               <input
+                id="edit-tx-day"
                 type="number"
                 min="1"
                 max="30"
@@ -318,8 +324,9 @@ export const TransactionsPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#A5ADBE] mb-1">Category</label>
+            <label htmlFor="edit-tx-cat" className="block text-xs font-medium text-[#A5ADBE] mb-1">Category</label>
             <select
+              id="edit-tx-cat"
               value={editCategory}
               onChange={(e) => setEditCategory(e.target.value as ExpenseCategory)}
               className="w-full px-3 py-2 bg-[#1B2130] border border-[#263045] rounded-xl text-xs text-[#F5F7FA] focus:outline-none focus:border-[#C8FF4D]"
