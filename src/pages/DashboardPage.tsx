@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { FinancialMetricsGrid } from '../components/dashboard/FinancialMetric'
+import { SurvivalStreakBadge } from '../components/innovation/SurvivalStreakBadge'
 import { CommitmentsPreview } from '../components/dashboard/CommitmentsPreview'
 import { InsightsPreview } from '../components/dashboard/InsightsPreview'
 import { useFinance } from '../state/useFinance'
@@ -23,7 +24,10 @@ export const DashboardPage: React.FC = () => {
       {/* 1. Main Hero: 3D Visualization + Balance Distinction */}
       <BalanceHero />
 
-      {/* 2. Responsive Key Financial Metrics Grid */}
+      {/* 2. Gen Z "Survive the Month" Streak & Vibe Badges */}
+      <SurvivalStreakBadge />
+
+      {/* 3. Responsive Key Financial Metrics Grid */}
       <FinancialMetricsGrid />
 
       {/* 3. Spending Trajectory Chart (Asynchronously loaded to keep initial bundle ultra-light) */}

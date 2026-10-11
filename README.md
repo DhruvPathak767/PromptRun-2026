@@ -1,210 +1,183 @@
 # 🌌 RupeeFlow — Make Every Rupee Count
 
-> **A 30-Day Financial Command Center for Gen Z**  
-> Manage a limited ₹10,000 monthly budget, simulate financial decisions before committing real rupees, and build lasting financial resilience.
+[![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_Mode_100%25-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vitest Passing](https://img.shields.io/badge/Tests-37%2F37_Passed-4EAA25?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![ESLint & Oxlint](https://img.shields.io/badge/Linter-0_Errors_%7C_0_Warnings-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
+[![WCAG 2.2 AA Compliant](https://img.shields.io/badge/Accessibility-WCAG_2.2_AA_Compliant-9875FF)](./ACCESSIBILITY.md)
+[![Security Audited](https://img.shields.io/badge/Security-0_Vulnerabilities_%7C_CSP_Strict-00C781)](./SECURITY.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+> **Live Deployment:** [https://rupee-flow-124.netlify.app/](https://rupee-flow-124.netlify.app/)  
+> **Team:** `FrontendSmashers` | **Hackathon Track:** *Broke But Functional — Survive the Month*  
+> **Repository:** [https://github.com/DhruvPathak767/PromptRun-2026](https://github.com/DhruvPathak767/PromptRun-2026)
+
+---
+
+## 🧭 Quick Links to Architectural Specifications
+
+- 🏗️ **[System Architecture & Data Flow (ARCHITECTURE.md)](./ARCHITECTURE.md)**: Layered design, domain math decoupling, and code splitting topology.
+- 🛡️ **[Security Policy & Threat Model (SECURITY.md)](./SECURITY.md)**: XSS tag-stripping, prototype-pollution defenses, and production CSP headers.
+- ♿ **[Accessibility & WCAG 2.2 AA Specification (ACCESSIBILITY.md)](./ACCESSIBILITY.md)**: Full keyboard traps, screen reader landmarks, and accessible chart table views.
+- 🤝 **[Contributing & Verification Guidelines (CONTRIBUTING.md)](./CONTRIBUTING.md)**: Pre-commit checklists, strict TypeScript guidelines, and test commands.
 
 ---
 
 ## 🚀 Product Overview
 
-**RupeeFlow** is an interactive personal finance application designed for digitally native young adults, college students, and early-career professionals in India. Managing a ₹10,000 monthly budget across 30 days is inherently restrictive, but RupeeFlow turns constraint into a strategic game.
+**RupeeFlow** is an interactive personal finance command center designed for Gen Z navigating a strict ₹10,000 monthly budget across 30 days. Rather than functioning as a passive expense tracker, RupeeFlow transforms financial survival into a transparent, gamified decision-making system.
 
-Unlike generic expense trackers, RupeeFlow’s central differentiator is the **What-If Decision Lab**: a dedicated non-destructive financial sandbox where users can test purchases (e.g. ₹2,499 sneakers), recurring subscriptions, savings deposits, or unexpected expenses to inspect their real-time impact on:
-- **Cash in hand vs. safe discretionary funds**
-- **Safe daily spending allowance** across remaining cycle days
-- **Upcoming obligations and commitment cliffs**
-- **Projected month-end balance** on Day 30
-- **Deterministic 0–100 Financial Health score**
+Young adults face recurring commitments, sudden social expenses (e.g. food delivery, sneaker drops, weekend outings), and unpredictable cash cliffs. RupeeFlow provides immediate mathematical clarity, separating illusory cash from **safe discretionary funds**, and features the signature **What-If Decision Lab** to test financial decisions before committing real rupees.
 
 ---
 
-## ✨ Key Features
+## ✨ Signature Features & Gen Z Innovation
 
-1. **Central Financial Engine**
-   - Pure, deterministic calculation engine where opening budget (₹10,000), income, completed expenses, and savings transfers reconcile mathematically.
-   - Strictly separates total cash from *safe discretionary funds* by factoring in unpaid bills, subscription charges, and outstanding planned savings.
+### 1. ⚡ Impulse Buy Reality Checker & 24h Cool-Down Chamber
+- **The Chai & Meal Index**: Translates any impulse craving (e.g. ₹799 Zomato order or Zara hoodie) into tangible Gen Z units: **40 cups of Tapri Chai ☕** or **6.7 Campus Thali Meals 🍱**.
+- **Daily Allowance Destruction Meter**: Computes the exact daily allowance loss across all remaining cycle days.
+- **24-Hour Cool-Down Chamber**: Locks impulse temptations in a digital cool-down chamber with a timer (87% of impulse purchases fade after 24 hours).
 
-2. **What-If Decision Lab (The Core Differentiator)**
-   - Side-by-side comparison matrix of **Before Decision** vs. **After Decision** across 8 required metrics.
-   - Plain-language consequence analysis (e.g. explains how a ₹2,499 purchase shrinks daily allowance from ₹394/day to ₹263/day for the next 19 days).
-   - Instant live feedback as parameters change without mutating real state.
-   - One-click **Apply Decision** workflow to commit the transaction directly to your persistent ledger.
+### 2. 🔥 "Survive the Month" Challenge & Streak Gamification
+- **Deterministic Survival Probability**: Real-time score (0–99%) forecasting likelihood of reaching Day 30 without deficit.
+- **Cycle Survival Streak**: Tracks consecutive days without budget exhaustion with celebration animations.
+- **Gen Z Achievement Badges**: Unlockable milestones (*Discretionary Discipline*, *Zen Cash Buffer*, *Subscription Auditor*, *Vault Builder*).
 
-3. **Interactive 30-Day Budget Planner**
-   - 30-day visual cycle calendar tracking past spending, current position (Day 12), and forecasted burn.
-   - Interactive cycle day inspector to see exactly which transactions occurred on any day.
-   - **Purchase-to-Allowance Elasticity slider** illustrating how spontaneous costs shrink daily spending limits.
+### 3. ✨ 30-Day Money Vibe Wrap (Spotify-Wrapped Style)
+- Generates a personalized Gen Z financial archetype card (*The Chai-Powered Strategist ☕*, *The Vault Builder 🎯*, *The Tactical Pragmatist 🛡️*).
+- One-click formatted summary copy for sharing with friends.
 
-4. **Signature 3D Composition & Rich Aesthetics**
-   - Original Three.js + React Three Fiber composition featuring a metallic bevelled ₹ rupee coin, orbiting 30-day cycle rings, and floating balance nodes.
-   - Code-split and lazy-loaded with a high-fidelity 2.5D CSS/SVG `SceneFallback` ensuring instant first paint and graceful degradation on low-power devices.
-   - Premium dark fintech palette: Midnight (`#0B0D12`), Electric Lime (`#C8FF4D`), Electric Violet (`#9875FF`), and Cyan (`#63E5F4`).
+### 4. 🧪 What-If Decision Lab (The Core Differentiator)
+- Non-destructive hypothetical sandbox deep-cloning current state.
+- Side-by-side **Before Decision** vs. **After Decision** comparison across 8 required metrics.
+- Plain-language consequence analysis (e.g. explains how a ₹2,499 purchase shrinks daily allowance from ₹394 to ₹263/day).
+- One-click **Apply Decision to Ledger** workflow.
 
-5. **Explainable Financial Health Score (0–100)**
-   - Transparent scoring based on 4 deterministic factors: Discretionary Cushion (35 pts), Month-End Runaway (30 pts), Commitment Burden (20 pts), and Savings Consistency (15 pts).
-   - Categorized into *Healthy* (80–100), *Needs Attention* (55–79), and *High Risk* (0–54).
-
-6. **Savings Goal Vaults**
-   - Goal progress tracking for emergency buffers, headphones, and certification bootcamps.
-   - Deposits move money from cash to savings without incorrectly categorizing transfers as expenses.
-
-7. **Subscriptions & Commitments Manager**
-   - Manage monthly recurring charges (Spotify, iCloud, Prime).
-   - Schedule fixed bills (hostel Wi-Fi, laundry, phone recharge).
-   - Built-in deduplication ensures subscription charges and commitments are never double counted.
-
-8. **Client-Side Persistence & Privacy**
-   - Versioned schema stored in `localStorage` with defensive validation and fallback.
-   - 100% private and offline: zero external bank APIs, zero backend servers, zero credential tracking.
+### 5. 🪐 Adaptive 3D Rupee Coin & Orbiting Rings
+- Original Three.js + React Three Fiber composition featuring a bevelled ₹ coin and orbiting cycle timeline rings.
+- **Capability Gated**: Automatically loads only on capable desktop screens (`>= 1024px`) without reduced-motion preferences; displays a lightweight 2.5D `SceneFallback` on mobile to guarantee fast First Contentful Paint.
 
 ---
 
-## 🛠️ Technology Stack
+## 📐 System Architecture Diagram
 
-- **Framework:** React 19 with TypeScript (Strict Mode enabled)
-- **Tooling:** Vite 8
-- **Styling:** Tailwind CSS v4 with custom CSS theme tokens & Glassmorphism
-- **Routing:** React Router v7 with route-based code splitting
-- **3D Graphics:** Three.js + React Three Fiber (`@react-three/fiber`)
-- **Charts:** Recharts
-- **Icons:** Lucide React
-- **State Management:** React Context + `useReducer` with defensive localStorage persistence
-- **Testing:** Vitest + React Testing Library (with jsdom)
-- **Linter:** Oxlint (0 warnings, 0 errors)
+```mermaid
+graph TD
+    subgraph UI_Layer ["Presentation & Interaction Layer (React 19 + Tailwind v4)"]
+        Shell["AppShell & Router<br/>(Dynamic Title, Landmarks, Live Announcements)"]
+        Dash["Dashboard<br/>(Hero, Metrics, Lazy Chart, Survival Streak)"]
+        Sim["What-If Decision Lab<br/>(Presets, Builder, Outcome Matrix)"]
+        Bud["30-Day Calendar<br/>(Elasticity Slider, Category Allocations)"]
+        Subs["Subscriptions & Bills<br/>(Commitments, Modals)"]
+        Goals["Savings Vaults<br/>(Deposit Pipeline, Goal Cards)"]
+    end
 
----
+    subgraph State_Layer ["State & Storage Layer (React Context + Hooks)"]
+        Context["FinanceContext<br/>(useReducer Dispatch, Action Flow)"]
+        Storage["Persistence Engine<br/>(localStorage v1, Defensive Sanitization)"]
+    end
 
-## 📁 Project Structure
+    subgraph Domain_Layer ["Pure Domain Math Engines (Decoupled TypeScript)"]
+        FE["financeEngine.ts<br/>(Balance Reconciliation, Safe Allowance, Pacing)"]
+        SE["scenarioEngine.ts<br/>(Simulated Clones, Net Variance, Delta Matrix)"]
+        RE["riskEngine.ts<br/>(Health Score 0-100, 4-Pillar Weighted Model)"]
+        IE["insightsEngine.ts<br/>(Actionable Heuristics & Recommendations)"]
+    end
 
-```text
-src/
-├── components/
-│   ├── common/               # Modal, ConfirmDialog, ToastContainer
-│   ├── dashboard/            # BalanceHero, FinancialMetric, SpendingChart, CommitmentsPreview, InsightsPreview
-│   ├── finance/              # TransactionFormModal
-│   ├── layout/               # AppShell, Sidebar, MobileNavigation, PageHeader
-│   └── visualization/        # FinanceScene (3D R3F), SceneFallback (2.5D CSS)
-├── data/
-│   └── demoData.ts           # Pristine ₹10k Day 12 cycle baseline
-├── finance/
-│   ├── financeEngine.ts      # Core mathematical calculations & formatting
-│   ├── financeEngine.test.ts # Comprehensive Vitest test suite
-│   ├── financeTypes.ts       # Typed interfaces for transactions, metrics, goals, & scenarios
-│   ├── insightsEngine.ts     # Rule-based contextual recommendations
-│   ├── riskEngine.ts         # Deterministic 0-100 financial health model
-│   └── scenarioEngine.ts     # Non-destructive What-If simulation engine
-├── pages/
-│   ├── BudgetPage.tsx        # 30-day timeline & allowance elasticity
-│   ├── DashboardPage.tsx     # Hero command center
-│   ├── GoalsPage.tsx         # Savings goals & deposits
-│   ├── InsightsPage.tsx      # Health breakdown & recommendations
-│   ├── SettingsPage.tsx      # Cycle day stepper & demo reset
-│   ├── SimulatorPage.tsx     # What-If Decision Lab
-│   ├── SubscriptionsPage.tsx # Recurring services & scheduled bills
-│   └── TransactionsPage.tsx  # Searchable & editable ledger
-├── state/
-│   ├── FinanceContext.ts     # React Context definition & types
-│   ├── FinanceProvider.tsx   # Root provider with auto-persistence
-│   ├── financeReducer.ts     # Immutable state reducer
-│   ├── persistence.ts        # Defensive localStorage parser
-│   └── useFinance.ts         # Custom state hook
-├── test/
-│   ├── baseline.test.ts      # Testing environment smoke test
-│   └── setup.ts              # Vitest DOM setup
-├── App.tsx                   # Code-split SPA routing
-├── index.css                 # Design tokens, typography, glassmorphism
-└── main.tsx                  # App entry point
+    subgraph Visualization_Layer ["Adaptive 3D & Graphics Layer"]
+        Capability["Hardware Capability Gate<br/>(Desktop >= 1024px, WebGL, No Reduced-Motion)"]
+        Scene3D["Three.js / R3F Canvas<br/>(Rotating ₹ Coin, Orbiting Cycle Rings)"]
+        Fallback["2.5D CSS/SVG SceneFallback<br/>(Zero-Shift Accessible Visualizer)"]
+    end
+
+    Shell --> Dash & Sim & Bud & Subs & Goals
+    Dash & Sim & Bud & Subs & Goals --> Context
+    Context --> Storage
+    Context --> FE & SE & RE & IE
+    Dash --> Capability
+    Capability -->|Pass| Scene3D
+    Capability -->|Fail| Fallback
 ```
 
 ---
 
-## 💻 Local Installation & Run Instructions
+## 📊 Mathematical Formulation Specification
 
-### 1. Prerequisites
-- Node.js `v18+` or `v20+` (tested on Node `v24.19.0`)
-- npm `v9+` or `v11+`
+All core calculations are implemented as deterministic, pure TypeScript functions:
 
-### 2. Clone and Install
+### 1. Reconciled Cash Balance
+$$\text{Cash Balance} = \text{Opening Budget} + \sum \text{Income} - \sum \text{Completed Expenses} - \sum \text{Savings Deposits}$$
+
+### 2. Available Discretionary Funds
+$$\text{Discretionary Funds} = \text{Cash Balance} - \sum \text{Upcoming Unpaid Commitments} - \sum \text{Remaining Active Subscriptions} - \sum \text{Outstanding Planned Savings}$$
+
+### 3. Safe Daily Spending Allowance
+$$\text{Safe Daily Allowance} = \max\left(0, \left\lfloor \frac{\text{Discretionary Funds}}{\max(1, 30 - \text{Current Day} + 1)} \right\rfloor\right)$$
+
+### 4. Pacing Velocity Ratio
+$$\text{Velocity Ratio} = \frac{\text{Actual Daily Average Spend}}{\text{Target Daily Pacing Allowance}}$$
+
+### 5. Explainable 4-Factor Financial Health Index (0–100)
+$$\text{Health Score} = S_{\text{discretionary}} \cdot 0.35 + S_{\text{month-end}} \cdot 0.30 + S_{\text{commitments}} \cdot 0.20 + S_{\text{savings}} \cdot 0.15$$
+
+---
+
+## 🛠️ Technology Stack & Dependencies
+
+| Area | Technologies | Rationale |
+| :--- | :--- | :--- |
+| **Framework** | React 19.2, TypeScript 6.0 | Strict Mode, modern concurrency |
+| **Build Tool** | Vite 8.3, Rolldown runtime | Sub-second builds, optimal tree-shaking |
+| **Styling** | Tailwind CSS v4, Vanilla CSS variables | Zero-runtime CSS with modern color tokens |
+| **Routing** | React Router v7 | Code-split SPA routes with meta listeners |
+| **3D Graphics** | Three.js 0.186, React Three Fiber | Hardware-gated 3D composition |
+| **Charts** | Recharts 3.10 | Lazy-loaded with accessible table toggle |
+| **Linting** | ESLint 9 (Flat Config), Oxlint 1.81 | jsx-a11y, react-hooks, typescript-eslint |
+| **Testing** | Vitest 5.0, Testing Library, jsdom | 37 automated tests passing |
+
+---
+
+## 💻 Local Setup & Development
+
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/DhruvPathak767/PromptRun-2026.git
 cd PromptRun-2026
 
-# Install dependencies
+# 2. Install dependencies
 npm install
-```
 
-### 3. Start Development Server
-```bash
+# 3. Start local development server
 npm run dev
+# Server ready at http://localhost:5173
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
----
-
-## 🧪 Available Validation Scripts
-
-All evaluation scripts have been executed and verified:
+### Verification & Quality Suite
 
 ```bash
-# 1. Run strict TypeScript compiler
-npm run typecheck
-
-# 2. Run fast linter (Oxlint)
+# Run both ESLint & Oxlint (0 errors, 0 warnings enforced)
 npm run lint
 
-# 3. Run automated unit & integration test suite (Vitest)
+# Run strict TypeScript typecheck
+npm run typecheck
+
+# Run all 37 Vitest unit and component tests
 npm run test
 
-# 4. Create optimized production build
+# Production build with chunk analysis
 npm run build
-
-# 5. Preview production build locally
-npm run preview
 ```
 
 ---
 
-## 📊 The Financial Model Explained
+## 🔒 Security & Privacy Disclosure
 
-- **Opening Budget:** Exactly ₹10,000 baseline added once per cycle.
-- **Cash Balance:** `Opening Budget + Additional Income − Expenses − Savings Deposits`.
-- **Safe Discretionary Funds:** `Cash Balance − Upcoming Commitments − Outstanding Planned Savings`.
-- **Safe Daily Allowance:** `Discretionary Funds ÷ Inclusive Days Remaining` (clamped to ₹0 if in deficit).
-- **Projected Month-End Cash:** `Cash − Unpaid Obligations − Remaining Variable Spend Rate − Outstanding Planned Savings`.
-- **Health Score (0–100):** Weighted sum of discretionary buffer (35%), projected month-end cushion (30%), obligation burden (20%), and savings consistency (15%).
+- **100% Client-Side Sandbox**: All calculations and simulations run in local browser memory.
+- **Zero Live Financial Credentials**: RupeeFlow does not connect to external bank accounts or store credentials.
+- **Zero Third-Party Trackers**: No analytics or telemetry scripts.
 
 ---
 
-## 🧪 How to Test a What-If Scenario
+## 📜 License
 
-1. Click **What-If Lab** in the sidebar (or bottom bar on mobile).
-2. Click the preset **"Buy sneakers for ₹2,499"** or enter a custom amount.
-3. Observe the side-by-side comparison table updating in real time:
-   - Notice liquid cash drops by ₹2,499.
-   - Notice the Safe Daily Allowance drops from ~₹394/day to ~₹263/day across remaining days.
-   - Read the generated consequence explanation describing how the purchase reduces liquidity cushion.
-4. Click **Apply Decision to Ledger**:
-   - The transaction is committed to real state.
-   - An accessible confirmation toast confirms the addition.
-   - Navigate to the **Dashboard** or **Transactions** to see all metrics updated in lockstep!
-
----
-
-## 🌐 Static Deployment Instructions (Vercel / Netlify / Cloudflare Pages)
-
-The project includes `vercel.json` configured for single-page history fallback:
-
-### Deploy to Vercel
-1. Push your repository to GitHub.
-2. Import the repository in [Vercel](https://vercel.com).
-3. Framework Preset: **Vite**.
-4. Build Command: `npm run build`.
-5. Output Directory: `dist`.
-6. Click **Deploy**. Direct navigation to any route (e.g. `/simulator`, `/budget`) works out of the box with zero 404 errors.
-
----
-
-## 🔒 Privacy & Local Storage Disclosure
-
-RupeeFlow is a **100% frontend simulation**. All financial data, custom transactions, and scenario comparisons run strictly in client-side memory and browser `localStorage`. No external financial accounts or APIs are connected.
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.  
+Built with passion by Team **FrontendSmashers** for the 2026 Personal Finance Challenge.

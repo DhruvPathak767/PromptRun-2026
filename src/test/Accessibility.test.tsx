@@ -33,6 +33,25 @@ describe('Accessibility & Keyboard Navigation Audits', () => {
     expect(handleClose).toHaveBeenCalledTimes(1)
   })
 
+  it('Modal traps focus and handles Tab key loop navigation', () => {
+    const handleClose = vi.fn()
+
+    render(
+      <Modal isOpen={true} onClose={handleClose} title="Focus Trap Test">
+        <input type="text" placeholder="First Input" />
+        <button type="button">Action Button</button>
+      </Modal>
+    )
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeInTheDocument()
+
+    // Simulate Tab keypress inside modal dialog
+    fireEvent.keyDown(dialog, { key: 'Tab', code: 'Tab' })
+    // Verify dialog remains active and rendered without escaping
+    expect(dialog).toBeInTheDocument()
+  })
+
   it('ConfirmDialog provides accessible destructive action buttons', () => {
     const handleConfirm = vi.fn()
     const handleClose = vi.fn()

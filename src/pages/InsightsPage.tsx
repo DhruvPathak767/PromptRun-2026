@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Sparkles,
@@ -10,10 +10,12 @@ import {
 } from 'lucide-react'
 import { useFinance } from '../state/useFinance'
 import { type SimulatedScenario } from '../finance/financeTypes'
+import { MoneyVibeCardModal } from '../components/innovation/MoneyVibeCardModal'
 
 export const InsightsPage: React.FC = () => {
   const { metrics, insights, setActiveSimulation } = useFinance()
   const navigate = useNavigate()
+  const [isVibeModalOpen, setIsVibeModalOpen] = useState(false)
 
   const handleLaunchScenario = (preset?: Partial<SimulatedScenario>, route = '/simulator') => {
     if (preset && preset.type) {
@@ -87,6 +89,15 @@ export const InsightsPage: React.FC = () => {
                   ? 'Moderate liquidity; mindful pacing advised'
                   : 'High risk of cash shortfall or deficit'}
               </span>
+
+              <button
+                type="button"
+                onClick={() => setIsVibeModalOpen(true)}
+                className="mt-2.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#C8FF4D]/15 text-[#C8FF4D] hover:bg-[#C8FF4D] hover:text-[#0B0D12] border border-[#C8FF4D]/30 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>My 30-Day Vibe Card</span>
+              </button>
             </div>
           </div>
         </div>
@@ -214,6 +225,11 @@ export const InsightsPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      <MoneyVibeCardModal
+        isOpen={isVibeModalOpen}
+        onClose={() => setIsVibeModalOpen(false)}
+      />
     </div>
   )
 }
