@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Zap, ArrowRight, X } from 'lucide-react'
 import { useFinance } from '../../state/useFinance'
@@ -10,34 +10,18 @@ import { formatRupees } from '../../finance/financeEngine'
  */
 export const ConsequencePill: React.FC = () => {
   const { state, metrics } = useFinance()
-  const [isVisible, setIsVisible] = useState(true)
-  const [prevTxCount, setPrevTxCount] = useState(state.transactions.length)
-  const [pulse, setPulse] = useState(false)
+  const [dismissedTxId, setDismissedTxId] = useState<string | null>(null)
 
-  // Whenever transaction count changes, re-show and trigger pulse
-  useEffect(() => {
-    if (state.transactions.length !== prevTxCount) {
-      setPrevTxCount(state.transactions.length)
-      setIsVisible(true)
-      setPulse(true)
-      const timer = setTimeout(() => setPulse(false), 2000)
-      return () => clearTimeout(timer)
-    }
-  }, [state.transactions.length, prevTxCount])
-
-  if (!isVisible || state.transactions.length === 0) return null
+  if (state.transactions.length === 0) return null
 
   const latestTx = state.transactions[0]
+  if (dismissedTxId === latestTx.id) return null
 
   return (
     <div
       role="region"
       aria-label="Recent Decision Consequence"
-      className={`mb-4 px-4 py-2.5 rounded-xl bg-[#141822]/95 border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg backdrop-blur-md ${
-        pulse
-          ? 'border-[#C8FF4D] ring-2 ring-[#C8FF4D]/30 shadow-[#C8FF4D]/10'
-          : 'border-[#263045]'
-      }`}
+      className="mb-4 px-4 py-2.5 rounded-xl bg-[#141822]/95 border border-[#263045] hover:border-[#3B4A6B] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg backdrop-blur-md"
     >
       <div className="flex items-center gap-2.5">
         <div className="w-6 h-6 rounded-lg bg-[#C8FF4D]/15 text-[#C8FF4D] flex items-center justify-center shrink-0">
@@ -64,7 +48,7 @@ export const ConsequencePill: React.FC = () => {
         </Link>
         <button
           type="button"
-          onClick={() => setIsVisible(false)}
+          onClick={() => setDismissedTxId(latestTx.id)}
           className="p-1 rounded-md text-[#A5ADBE] hover:text-[#F5F7FA] hover:bg-white/5 transition-colors"
           aria-label="Dismiss consequence tracker"
         >

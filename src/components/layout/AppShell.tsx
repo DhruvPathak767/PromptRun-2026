@@ -310,6 +310,7 @@ export const AppShell: React.FC = () => {
               setIsQuickActionOpen(false)
               setIsChaosModeOpen(true)
             }}
+            aria-label="Launch Chaos Mode Stress Test"
             className="col-span-2 flex flex-col items-center gap-2.5 p-4 rounded-xl bg-[#1B2130] hover:bg-[#263045] border border-[#FF5C5C]/30 text-center transition-all group"
           >
             <div className="w-10 h-10 rounded-xl bg-[#FF5C5C]/20 text-[#FF5C5C] flex items-center justify-center group-hover:scale-110 transition-transform">

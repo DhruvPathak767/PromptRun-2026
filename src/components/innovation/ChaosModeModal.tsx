@@ -8,12 +8,10 @@ import {
   Flame,
   CheckCircle2,
   RefreshCw,
-  AlertTriangle,
   ArrowRight,
-  ShieldCheck,
 } from 'lucide-react'
 import { playWarningSound, playFanfareSound } from '../../lib/soundEffects'
-import { fireCelebrationConfetti } from '../../utils/confetti'
+import { triggerConfetti } from '../../utils/confetti'
 
 interface ShockScenario {
   id: string
@@ -134,15 +132,16 @@ export const ChaosModeModal: React.FC<ChaosModeModalProps> = ({ isOpen, onClose 
     })
 
     setAbsorbed(true)
-    addToast(
-      `Absorbed ${formatRupees(selectedShock.amount)} unexpected shock into 30-day ledger!`,
-      'warning'
-    )
+    addToast({
+      title: 'Shock Absorbed',
+      message: `Absorbed ${formatRupees(selectedShock.amount)} unexpected shock into 30-day ledger!`,
+      type: 'warning',
+    })
 
     if (projectedBalance > 0) {
       setTimeout(() => {
         playFanfareSound()
-        fireCelebrationConfetti()
+        triggerConfetti()
       }, 500)
     }
   }
