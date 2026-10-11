@@ -144,12 +144,13 @@ export function calculateFinancialMetrics(state: RupeeFlowState): FinancialMetri
 
   // Days remaining
   const daysRemaining = Math.max(0, 30 - currentDay) // strictly after today
-  const inclusiveDaysRemaining = Math.max(1, 31 - currentDay) // from today through Day 30 inclusive
+  const inclusiveDaysRemaining = currentDay > 30 ? 0 : Math.max(1, 31 - currentDay) // from today through Day 30 inclusive
 
-  // Safe daily allowance: availableDiscretionaryFunds / inclusiveDaysRemaining (0 if negative/zero)
-  const safeDailyAllowance = availableDiscretionaryFunds > 0
-    ? Math.floor(availableDiscretionaryFunds / inclusiveDaysRemaining)
-    : 0
+  // Safe daily allowance: availableDiscretionaryFunds / inclusiveDaysRemaining (0 if negative/zero or days remaining is 0)
+  const safeDailyAllowance =
+    availableDiscretionaryFunds > 0 && inclusiveDaysRemaining > 0
+      ? Math.floor(availableDiscretionaryFunds / inclusiveDaysRemaining)
+      : 0
 
   // Variable spending pace & Forecast
   const elapsedDays = Math.max(1, currentDay - 1)

@@ -10,6 +10,7 @@ import { formatRupees } from '../finance/financeEngine'
 import { type SavingsGoal } from '../finance/financeTypes'
 import { Modal } from '../components/common/Modal'
 import { ConfirmDialog } from '../components/common/ConfirmDialog'
+import { sanitizeText, sanitizeAmount } from '../lib/sanitize'
 
 export const GoalsPage: React.FC = () => {
   const { state, metrics, addGoal, deleteGoal, contributeToGoal } = useFinance()
@@ -29,19 +30,21 @@ export const GoalsPage: React.FC = () => {
 
   const handleCreateSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const target = parseFloat(targetAmount)
-    const planned = parseFloat(plannedContribution)
-    if (!name.trim() || isNaN(target) || target <= 0) return
+    const cleanName = sanitizeText(name, 60)
+    const targetValidation = sanitizeAmount(targetAmount, 1, 1000000)
+    const plannedValidation = sanitizeAmount(plannedContribution, 0, 1000000)
+
+    if (!cleanName || !targetValidation.valid) return
 
     addGoal({
-      name: name.trim(),
-      targetAmount: target,
+      name: cleanName,
+      targetAmount: targetValidation.amount,
       currentAmount: 0,
-      plannedCycleContribution: Math.max(0, planned || 0),
+      plannedCycleContribution: plannedValidation.valid ? plannedValidation.amount : 0,
       color,
       category,
       iconName: 'Target',
-      description: description.trim(),
+      description: sanitizeText(description, 200),
     })
 
     setName('')
@@ -54,10 +57,10 @@ export const GoalsPage: React.FC = () => {
   const handleContributeSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!contributeTargetGoal) return
-    const amount = parseFloat(depositAmount)
-    if (isNaN(amount) || amount <= 0) return
+    const amountVal = sanitizeAmount(depositAmount, 1, Math.max(1, metrics.cashBalance))
+    if (!amountVal.valid) return
 
-    contributeToGoal(contributeTargetGoal.id, amount)
+    contributeToGoal(contributeTargetGoal.id, amountVal.amount)
     setContributeTargetGoal(null)
     setDepositAmount('500')
   }

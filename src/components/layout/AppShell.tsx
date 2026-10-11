@@ -70,6 +70,14 @@ export const AppShell: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0D12] text-[#F5F7FA] flex flex-col lg:flex-row font-sans">
+      {/* WCAG 2.2 AA Skip Link for Keyboard Navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-[#C8FF4D] focus:text-[#0B0D12] focus:font-extrabold focus:text-xs focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-4 focus:ring-[#C8FF4D]/40"
+      >
+        Skip to main content
+      </a>
+
       {/* Desktop Sidebar */}
       <Sidebar />
 
@@ -81,7 +89,7 @@ export const AppShell: React.FC = () => {
           onOpenAddExpense={() => setIsAddTxOpen(true)}
         />
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full">
+        <main id="main-content" tabIndex={-1} className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full focus:outline-none">
           <Outlet />
         </main>
       </div>

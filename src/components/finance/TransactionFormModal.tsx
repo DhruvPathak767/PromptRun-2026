@@ -7,6 +7,8 @@ import {
 } from '../../finance/financeTypes'
 import { useFinance } from '../../state/useFinance'
 
+import { sanitizeText, sanitizeAmount, sanitizeCycleDay } from '../../lib/sanitize'
+
 interface TransactionFormModalProps {
   isOpen: boolean
   onClose: () => void
@@ -31,29 +33,30 @@ export const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
     e.preventDefault()
     setError(null)
 
-    const parsedAmount = parseFloat(amount)
-    if (!description.trim()) {
-      setError('Please provide a transaction description.')
-      return
-    }
-    if (isNaN(parsedAmount) || parsedAmount <= 0) {
-      setError('Please enter a valid positive amount in rupees.')
-      return
-    }
-    if (parsedAmount > 100000) {
-      setError('Amount exceeds reasonable 30-day budget limits.')
+    const cleanDesc = sanitizeText(description, 100)
+    if (!cleanDesc) {
+      setError('Please provide a valid transaction description.')
       return
     }
 
+    const amountValidation = sanitizeAmount(amount, 1, 100000)
+    if (!amountValidation.valid) {
+      setError(amountValidation.error || 'Please enter a valid positive amount in rupees.')
+      return
+    }
+
+    const cleanDay = sanitizeCycleDay(cycleDay)
+    const cleanNote = note ? sanitizeText(note, 200) : undefined
+
     addTransaction({
-      description: description.trim(),
-      amount: parsedAmount,
+      description: cleanDesc,
+      amount: amountValidation.amount,
       category,
       type,
       isFixed,
-      cycleDay: Math.min(30, Math.max(1, Number(cycleDay))),
-      date: `Day ${cycleDay} • Added`,
-      note: note.trim() || undefined,
+      cycleDay: cleanDay,
+      date: `Day ${cleanDay} • Added`,
+      note: cleanNote,
     })
 
     // Reset and close
